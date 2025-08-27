@@ -27,7 +27,6 @@ while True:
     except ValueError:
         print("Invalid input. Please enter a number!")
 
-
 area = round(calculate_circle_area(input_radius), 2)
 #Result
 print(f" The area of a circle with a radius of {input_radius} is {area}")
