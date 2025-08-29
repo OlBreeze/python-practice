@@ -1,5 +1,5 @@
 #Lesson 1
-from Rectangle import Rectangle
+from rectangle import Rectangle
 from calculate_circle_values import calculate_circle_area
 
 
