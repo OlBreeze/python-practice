@@ -1,5 +1,5 @@
 class Rectangle:
-    def __init__(self, width:float, height:float):
+    def __init__(self, width: float, height: float):
         """constructor that accepts the width and height of the rectangle"""
         self.width = width
         self.height = height
@@ -9,7 +9,7 @@ class Rectangle:
 
     def area(self):
         """ method that returns the area of the rectangle"""
-        return  self.width * self.height
+        return self.width * self.height
 
     def perimeter(self):
         """method that returns the perimeter of the rectangle"""

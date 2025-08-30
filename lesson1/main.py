@@ -1,6 +1,6 @@
 #Lesson 1
 from rectangle import Rectangle
-from calculate_circle_values import calculate_circle_area
+from lesson1.calculate_circle_values import calculate_circle_area
 
 
 #test
