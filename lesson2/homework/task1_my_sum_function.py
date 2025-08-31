@@ -1,6 +1,5 @@
 # Написати функцію my_sum, яка перекриває вбудовану функцію sum.
 # Функція поинна просто виводити повідомлення: "This is my custom sum function!".
-# Функція поинна просто виводити повідомлення: "This is my custom sum function!".
 
 def my_sum(*args):
     return "This is my custom sum function!"
