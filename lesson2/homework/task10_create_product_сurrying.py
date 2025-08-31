@@ -1,0 +1,38 @@
+# Завдання 10: Розробити програму для управління товарами в онлайн-магазині,
+# використовучи карирувані функції.
+# Написати функцію create_product, яка приймає назву, ціну та кількість товару.
+
+def create_product(name):
+    def add_price(price):
+        def add_quantity(quantity):
+            # Внутрішній стан продукту
+            product = {
+                'name': name,
+                'price': price,
+                'quantity': quantity
+            }
+
+            # Функція-замикання для зміни ціни
+            def change_price(new_price):
+                product['price'] = new_price
+                return f"Ціна товару '{product['name']}' оновлена до {product['price']} грн"
+
+            # Повертаємо сам товар і функцію-замикання
+            return product, change_price
+        return add_quantity
+    return add_price
+
+# Створюємо товар через карирування
+product, change_price = create_product("Навушники")(1500)(10)
+print(product)
+
+# Змінюємо ціну за допомогою замикання
+print(change_price(1200))
+print(product)
+
+
+# Каррирование — это техника, при которой функция с несколькими аргументами превращается
+# в цепочку функций по одному аргументу.
+# Closure	Замыкание       Функция, которая запоминает внешние переменные	inner() помнит x
+# Currying	Каррирование    Разделение функции на цепочку из функций по 1 аргументу	add(5)(3)
+# ❗ Связь:	Каррированные функции используют замыкания	—
