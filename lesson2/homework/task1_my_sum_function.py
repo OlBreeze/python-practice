@@ -1,7 +1,13 @@
 # Написати функцію my_sum, яка перекриває вбудовану функцію sum.
-# Функція поинна просто виводити повідомлення: "This is my custom sum function!".
+# Функція повинна просто виводити повідомлення: "This is my custom sum function!".
+from typing import Any
 
-def my_sum(*args):
+
+def my_sum(*args: Any) -> str:
+    """
+    Функція my_sum, що перекриває вбудовану функцію sum
+    та просто виводити повідомлення: "This is my custom sum function!
+    """
     return "This is my custom sum function!"
 
 

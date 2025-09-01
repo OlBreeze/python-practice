@@ -1,15 +1,25 @@
 # Завдання 2: Менеджер підписки на розсилку
+from typing import List
 
-subscribers = []
+subscribers: List[str] = []
 
 
-def subscribe(name: str):
+def subscribe(name: str) -> None:
     """
-    Функція для підписки користувача на розсилку.
+    Додає користувача до списку підписників і підтверджує підписку.
+    Parameters
+    ----------
+    name : str
+    Ім'я користувача, якого потрібно підписати.
     """
     subscribers.append(name)
 
     def confirm_subscription():
+        """
+        Локальна функція для підтвердження підписки.
+        Використовує замикання, щоб звернутися до змінної name
+        із зовнішньої області видимості.
+        """
         print(f"Підписка підтверджена для {name}")
 
     return confirm_subscription()

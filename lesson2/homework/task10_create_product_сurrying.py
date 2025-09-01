@@ -2,9 +2,20 @@
 # використовучи карирувані функції.
 # Написати функцію create_product, яка приймає назву, ціну та кількість товару.
 
-def create_product(name):
-    def add_price(price):
-        def add_quantity(quantity):
+def create_product(name:str):
+    """
+    Карірована функція для створення товару.
+
+    Параметри:
+        name (str): Назва товару.
+
+    Повертає:
+        Функція, що приймає price, потім quantity, і повертає:
+            - словник з інформацією про товар
+            - функцію для оновлення ціни
+    """
+    def add_price(price: float):
+        def add_quantity(quantity: int):
             # Внутрішній стан продукту
             product = {
                 'name': name,
@@ -13,7 +24,7 @@ def create_product(name):
             }
 
             # Функція-замикання для зміни ціни
-            def change_price(new_price):
+            def change_price(new_price: float) -> str:
                 product['price'] = new_price
                 return f"Ціна товару '{product['name']}' оновлена до {product['price']} грн"
 

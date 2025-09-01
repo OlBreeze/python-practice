@@ -3,12 +3,12 @@
 # Зберігати події у списку за допомогою глобальної змінної.
 
 from datetime import datetime, date
-from typing import List, Dict
+from typing import List, Dict, Any, Callable
 
-events = []
+events: List[Dict[str, Any]] = []
 
 
-def create_event_manager():
+def create_event_manager()-> Dict[str, Callable[..., Any]]:
     """
     Створює менеджер подій.
     Повертає словник з функціями для роботи з подіями.

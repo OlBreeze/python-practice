@@ -1,8 +1,33 @@
 # Завдання 6: Калькулятор з використанням замикань
 # arr_symbols = ['+', '-', '*', '/', '%']
+from numbers import Number
+from typing import Callable, Union
 
-def create_operator(operator):
-    def operation(a, b):
+
+def create_operator(operator: str) -> Callable[[Number, Number], Union[Number, str]]:
+    """
+    Створює математичну операцію на основі переданого оператора.
+
+    Args:
+        operator (str): Символ операції ('+', '-', '*', '/').
+
+    Returns:
+        Callable[[Number, Number], Union[Number, str]]:
+            Функція, яка приймає два числа і виконує операцію.
+            У разі помилки (наприклад, ділення на нуль) повертає повідомлення з помилкою.
+    """
+
+    def operation(a: Number, b: Number) -> Union[Number, str]:
+        """
+        Виконує математичну операцію між двома числами.
+
+        Args:
+            a (Number): Перше число.
+            b (Number): Друге число.
+
+        Returns:
+            Union[Number, str]: Результат обчислення або повідомлення про помилку.
+        """
         if operator == '+':
             return a + b
         elif operator == '-':

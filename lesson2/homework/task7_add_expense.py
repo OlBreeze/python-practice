@@ -1,9 +1,9 @@
 # Завдання 7: Трекер витрат
 
-total_expense = 0
+total_expense: float = 0
 
 
-def add_expense(amount: float):
+def add_expense(amount: float) -> None:
     """Додає витрату до загальної суми"""
     global total_expense
     total_expense += amount
