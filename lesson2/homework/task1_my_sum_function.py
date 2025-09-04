@@ -1,5 +1,6 @@
 # Написати функцію my_sum, яка перекриває вбудовану функцію sum.
 # Функція повинна просто виводити повідомлення: "This is my custom sum function!".
+import builtins
 from typing import Any
 
 
@@ -17,8 +18,8 @@ sum = my_sum
 task1 = range(1, 10)
 print(sum(task1))
 print(my_sum(task1))
-
-#повертаю original_sum
+# print(builtins.sum(task1))
+# повертаю original_sum
 sum = original_sum
 print(sum(task1))
 print(my_sum(task1))
