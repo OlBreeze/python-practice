@@ -8,6 +8,10 @@ from typing import Any
 
 
 def analyze_object(obj: Any) -> None:
+    """
+    Функція, для перевірки типів і атрибутів об'єктів
+    :param obj: будь-який об'єкт
+    """
     print(f"Тип: {obj}")
     print(f"Ім'я класу: {obj.__class__.__name__}")
 
@@ -32,20 +36,20 @@ def analyze_object(obj: Any) -> None:
     print("Методи:")
     for method in methods:
         print("-", method)
-    print("Атрибуты:")
+    print("Атрибути:")
     for attribute in attributes:
         print("-", attribute)
 
-    #2. callable:
+    # 2. callable:
     # methods = [member for member in all_members if callable(getattr(obj, member)) and not member.startswith("__")]
     # attributes = [member for member in all_members if
     #               not callable(getattr(obj, member)) and not member.startswith("__")]
-    #3. inspect:
+    # 3. inspect:
     # methods = [name for name, val in inspect.getmembers(obj, predicate=inspect.ismethod)]
     # attributes = [name for name, val in inspect.getmembers(obj) if not callable(val) and not name.startswith('__')]
 
 
-# ---------------------------------------------------------
+# --------------------------------------- Тестування ------------------
 class MyClass:
     def __init__(self, value):
         self.value = value
@@ -54,5 +58,23 @@ class MyClass:
         return f"Hello, {self.value}"
 
 
+print("\nКлас")
 obj = MyClass("World")
 analyze_object(obj)
+
+
+def sample_function(x: int, y: str = "default") -> str:
+    """функція для тестування."""
+    return f"{x}: {y}"
+
+
+print("\nФункція")
+analyze_object(sample_function)
+
+print("\nВбудований тип - список")
+test_list = [1, 2, 3, "hello", {"key": "value"}]
+analyze_object(test_list)
+
+print("\nСловник")
+test_dict = {"name": "Петро", "age": 30, "scores": [85, 90, 78]}
+analyze_object(test_dict)
