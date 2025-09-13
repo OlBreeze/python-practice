@@ -1,0 +1,6 @@
+file = open("text.txt", "a", encoding="utf-8")
+file.write("test message23\n")
+file.write("test message234\n")
+file.write("test message2345\n")
+print(file)
+file.close()
