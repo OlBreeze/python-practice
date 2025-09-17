@@ -201,7 +201,7 @@ def remove_xml_elements():
                 print("Сотрудник с ID 2 удален")
                 break
 
-        tree.write("employees_after_removal.xml", encoding="utf-8", xml_declaration=True)
+        tree.write("employees_after_removalxml", encoding="utf-8", xml_declaration=True)
 
     except Exception as e:
         print(f"Ошибка удаления: {e}")
