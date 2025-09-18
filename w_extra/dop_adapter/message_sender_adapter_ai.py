@@ -402,20 +402,20 @@ def demo_file_conversion():
     print("=" * 50)
 
     # Тестові дані
-    csv_data = """name,age,city
-Іван,25,Київ
+    csv_data1 = """name,age,city
+Іван1,25,Київ
 Марія,30,Львів
 Петро,35,Одеса"""
 
-    json_data = """[
-  {"name": "Анна", "age": 28, "city": "Харків"},
+    json_data1 = """[
+  {"name": "Анна1", "age": 28, "city": "Харків"},
   {"name": "Олег", "age": 32, "city": "Дніпро"}
 ]"""
 
-    xml_data = """<?xml version="1.0" encoding="UTF-8"?>
+    xml_data1 = """<?xml version="1.0" encoding="UTF-8"?>
 <people>
     <person>
-        <name>Світлана</name>
+        <name>Світлана1</name>
         <age>27</age>
         <city>Полтава</city>
     </person>
@@ -434,10 +434,10 @@ def demo_file_conversion():
     print("\n1. Перетворення CSV в JSON:")
     print("-" * 30)
     print("Початкові CSV дані:")
-    print(csv_data)
+    print(csv_data1)
 
     try:
-        json_result = csv_to_json.convert(csv_data)
+        json_result = csv_to_json.convert(csv_data1)
         print("\nРезультат JSON:")
         print(json_result)
     except Exception as e:
@@ -446,10 +446,10 @@ def demo_file_conversion():
     print("\n2. Перетворення JSON в CSV:")
     print("-" * 30)
     print("Початкові JSON дані:")
-    print(json_data)
+    print(json_data1)
 
     try:
-        csv_result = json_to_csv.convert(json_data)
+        csv_result = json_to_csv.convert(json_data1)
         print("\nРезультат CSV:")
         print(csv_result)
     except Exception as e:
@@ -458,10 +458,10 @@ def demo_file_conversion():
     print("\n3. Перетворення XML в JSON:")
     print("-" * 30)
     print("Початкові XML дані:")
-    print(xml_data)
+    print(xml_data1)
 
     try:
-        json_from_xml = xml_to_json.convert(xml_data)
+        json_from_xml = xml_to_json.convert(xml_data1)
         print("\nРезультат JSON:")
         print(json_from_xml)
     except Exception as e:

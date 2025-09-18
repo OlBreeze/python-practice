@@ -2,8 +2,7 @@
 ДЕМОНСТРАЦІЯ ВИКОРИСТАННЯ
 """
 from data_converter import CSVToJSONAdapter, JSONToCSVAdapter, XMLToJSONAdapter
-from message_service import SMSService, EmailService, PushService, SMSAdapter, EmailAdapter, PushAdapter, \
-    MessageBroadcaster
+from message_service import *
 
 
 def demo_messaging_system():
