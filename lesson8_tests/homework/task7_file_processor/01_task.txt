@@ -1,0 +1,15 @@
+Завдання 7. Тестування з використанням фікстур та тимчасових файлів
+
+Напишіть програму для роботи з файлами та протестуйте її, використовуючи тимчасові файли та фікстури в pytest. Реалізуйте клас FileProcessor, який має такі методи:
+
+write_to_file(file_path: str, data: str): записує дані у файл.
+read_from_file(file_path: str) -> str: читає дані з файлу.
+У тестах використовуйте фікстуру tmpdir для створення тимчасового файлу:
+
+Copy code
+def test_file_write_read(tmpdir):
+    file = tmpdir.join("testfile.txt")
+    FileProcessor.write_to_file(file, "Hello, World!")
+    content = FileProcessor.read_from_file(file)
+    assert content == "Hello, World!"
+Додайте тести для перевірки методів з великими обсягами даних, порожніми рядками, а також тести на наявність винятків, якщо файл не знайдено.
