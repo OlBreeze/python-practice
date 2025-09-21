@@ -1,7 +1,7 @@
 import unittest
 
-from lesson8_tests.homework.task1_unittest.string_processor import StringProcessor
-from lesson8_tests.homework.task1_unittest.test_string_processor import TestStringProcessor
+from lesson8_tests.homework.task1_unittest_doctest.string_processor import StringProcessor
+from lesson8_tests.homework.task1_unittest_doctest.test_string_processor import TestStringProcessor
 
 
 def run_tests():

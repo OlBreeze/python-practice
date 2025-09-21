@@ -7,7 +7,6 @@
 # перевіряють викидання виключення ZeroDivisionError, якщо знаменник дорівнює нулю.
 # Додайте тест із параметризацією для перевірки поділу з різними значеннями.
 
-# test_divide.py - тести
 import pytest
 from divide import divide
 
@@ -54,12 +53,12 @@ class TestDivide:
         (100, 4, 25.0),
         (9, 3, 3.0),
         (-15, -3, 5.0),
-        (22, 7, 22 / 7),  # Перевірка з дробовим результатом
+        (22, 7, 22 / 7),
     ])
     def test_parametrized_division(self, a, b, expected):
         """Параметризований тест для різних значень ділення"""
         result = divide(a, b)
-        assert result == pytest.approx(expected, rel=1e-9)
+        assert result == pytest.approx(expected, rel=1e-9) # используется для сравнения чисел с плавающей точкой с заданной относительной точностью:
 
     @pytest.mark.parametrize("a,b", [
         (10, 0),
@@ -103,6 +102,11 @@ class TestDivideWithFixtures:
         for a, b, expected in sample_data:
             assert divide(a, b) == expected
 
+
+
+
+
+# --------------------------------------------------------------------
 # Приклад запуску тестів:
 # В терміналі виконайте:
 # pip install pytest

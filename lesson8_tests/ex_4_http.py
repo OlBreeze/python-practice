@@ -2,7 +2,7 @@
 import unittest
 from unittest.mock import patch, Mock, MagicMock
 import requests
-import json
+
 from example_1 import (
     get_user, create_user, update_user, delete_user,
     get_users_list, get_user_posts, get_user_safe
@@ -336,3 +336,19 @@ if __name__ == '__main__':
 
     # 2. Запуск с фильтрацией
     # python -m unittest test_http_requests.TestHttpRequests.test_get_user_success -v
+
+
+
+
+
+# Пример запуска тестов:
+if __name__ == "__main__":
+    # Для запуска тестов используйте команду: pytest -v этот_файл.py
+    print("Для запуска тестов используйте команду:")
+    print("pytest -v user_manager.py")
+    print("\nДля запуска с покрытием кода:")
+    print("pytest --cov=user_manager --cov-report=html user_manager.py")
+    print("\nДля запуска только определенного класса тестов:")
+    print("pytest -v user_manager.py::TestUserManager")
+    print("\nДля показа пропущенных тестов:")
+    print("pytest -v -rs user_manager.py")

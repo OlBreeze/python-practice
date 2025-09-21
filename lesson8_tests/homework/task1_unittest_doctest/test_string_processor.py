@@ -16,7 +16,7 @@
 
 import unittest
 
-from lesson8_tests.homework.task1_unittest.string_processor import StringProcessor
+from lesson8_tests.homework.task1_unittest_doctest.string_processor import StringProcessor
 
 
 class TestStringProcessor(unittest.TestCase):

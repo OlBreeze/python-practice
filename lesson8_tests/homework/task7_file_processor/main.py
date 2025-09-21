@@ -1,6 +1,6 @@
 import os
 
-from lesson8_tests.homework.task7.file_processor import FileProcessor
+from lesson8_tests.homework.task7_file_processor.file_processor import FileProcessor
 
 if __name__ == "__main__":
     # Приклад використання

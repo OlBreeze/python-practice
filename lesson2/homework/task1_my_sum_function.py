@@ -18,7 +18,7 @@ sum = my_sum
 task1 = range(1, 10)
 print(sum(task1))
 print(my_sum(task1))
-# print(builtins.sum(task1))
+# print(builtins.sum(task1_unittest_doctest))
 # повертаю original_sum
 sum = original_sum
 print(sum(task1))

@@ -64,7 +64,8 @@ class TestBankAccount:
         assert balance == 200.0
         assert empty_account.get_balance() == 200.0
 
-    @pytest.mark.parametrize("invalid_amount", [-100, 0, -0.01])
+    @pytest.mark.parametrize("invalid_amount", [-100, 0,
+                                                -0.01])  # pytest автоматически запускает этот тест 3 раза, подставляя по очереди amount
     def test_deposit_invalid_amounts_raise_error(self, empty_account, invalid_amount):
         """Тест поповнення некоректними сумами"""
         with pytest.raises(InvalidAmountError):
@@ -227,26 +228,3 @@ class TestBankAccount:
                 expected_balance -= amount
 
             assert empty_account.get_balance() == expected_balance
-
-
-# conftest.py - конфігурація pytest
-import pytest
-
-
-def pytest_configure(config):
-    """Конфігурація pytest з кастомними маркерами"""
-    config.addinivalue_line("markers", "slow: позначає повільні тести")
-    config.addinivalue_line("markers", "integration: інтеграційні тести")
-    config.addinivalue_line("markers", "api: тести API")
-
-
-@pytest.fixture(scope="session")
-def test_data():
-    """Фікстура сесії для тестових даних"""
-    return {
-        "test_accounts": [
-            {"number": "TEST001", "balance": 0},
-            {"number": "TEST002", "balance": 1000},
-            {"number": "TEST003", "balance": 5000}
-        ]
-    }

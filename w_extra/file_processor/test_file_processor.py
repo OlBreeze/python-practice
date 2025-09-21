@@ -49,7 +49,7 @@ class TestFileProcessor:
         assert content == test_data
 
     def test_file_write_read_large_data(self, tmpdir):
-        """Тест запису та читання великих обсягів даних."""
+        """Тест  запису та  читання великих обсягів даних ."""
         file_path = tmpdir.join("large_file.txt")
         # Створюємо рядок розміром приблизно 1MB
         test_data = "A" * (1024 * 1024)
@@ -108,7 +108,7 @@ class TestFileProcessor:
         assert FileProcessor.file_exists("nonexistent_file.txt") is False
 
     def test_overwrite_existing_file(self, tmpdir):
-        """Тест перезапису існуючого файлу."""
+        """Тест  перезапису  існуючого  файлу ."""
         file_path = tmpdir.join("overwrite_file.txt")
         original_data = "Original content"
         new_data = "New content"
@@ -158,10 +158,10 @@ def temp_file_with_content():
             os.unlink(temp_path)
 
 
-# @pytest.fixture
-# def large_test_data():
-#     """Фікстура для створення великих тестових даних."""
-#     return "Line {}\n".format(i) for i in range(10000)
+@pytest.fixture
+def large_test_data():
+    """Фікстура для створення великих тестових даних."""
+    return ("Line {}\n".format(i) for i in range(10000))
 
 
 class TestFileProcessorWithFixtures:
@@ -172,14 +172,14 @@ class TestFileProcessorWithFixtures:
         file_path, expected_content = temp_file_with_content
         content = FileProcessor.read_from_file(file_path)
         assert content == expected_content
-    #
-    # def test_large_data_processing(self, tmpdir, large_test_data):
-    #     """Тест обробки великих даних з фікстурою."""
-    #     file_path = tmpdir.join("large_data_test.txt")
-    #     test_content = "".join(large_test_data)
-    #
-    #     FileProcessor.write_to_file(str(file_path), test_content)
-    #     content = FileProcessor.read_from_file(str(file_path))
-    #
-    #     assert content == test_content
-    #     assert content.count('\n') == 10000
+
+    def test_large_data_processing(self, tmpdir, large_test_data):
+        """Тест обробки великих даних з фікстурою."""
+        file_path = tmpdir.join("large_data_test.txt")
+        test_content = "".join(large_test_data)
+
+        FileProcessor.write_to_file(str(file_path), test_content)
+        content = FileProcessor.read_from_file(str(file_path))
+
+        assert content == test_content
+        assert content.count('\n') == 10000

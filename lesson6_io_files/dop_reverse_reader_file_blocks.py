@@ -65,6 +65,6 @@ class ReverseFileReader:
 
 
 if __name__ == "__main__":
-    reader = ReverseFileReader("task1.txt")
+    reader = ReverseFileReader("task1_unittest_doctest.txt")
     for line in reader:
         print(line)

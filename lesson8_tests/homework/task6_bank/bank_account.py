@@ -1,6 +1,6 @@
 import requests
 
-from lesson8_tests.homework.task6.my_exceptions import InvalidAmountError, InsufficientFundsError
+from lesson8_tests.homework.task6_bank.my_exceptions import InvalidAmountError, InsufficientFundsError
 
 
 class BankAccount:

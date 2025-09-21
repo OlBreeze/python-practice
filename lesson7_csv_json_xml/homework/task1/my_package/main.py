@@ -1,6 +1,6 @@
 # У файлі main.py імпортуй функції з модулів і продемонструй їх роботу, викликавши кожну з функцій.
-# from lesson7_csv_json_xml.homework.task1.my_package import math_utils
-# from lesson7_csv_json_xml.homework.task1.my_package import string_utils
+# from lesson7_csv_json_xml.homework.task1_unittest_doctest.my_package import math_utils
+# from lesson7_csv_json_xml.homework.task1_unittest_doctest.my_package import string_utils
 
 from math_utils import factorial, my_gcd
 from string_utils import *
