@@ -1,0 +1,26 @@
+# Завдання 7. Пошук IP-адрес
+# Напишіть функцію, яка з тексту витягує всі IPv4-адреси.
+# IPv4-адреса складається з чотирьох чисел (від 0 до 255), розділених крапками.
+import re
+
+def is_ip_address(text: str) -> bool:
+    """
+    Проверяет, является ли введённая строка IPv4-адресом.
+    """
+    pattern = r"^((25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)\.){3}" \
+              r"(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)$"
+    # octet = r'(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)'
+    # ipv4_pattern = rf'^{octet}\.{octet}\.{octet}\.{octet}$'
+
+    return re.match(pattern, text) is not None
+
+
+if __name__ == "__main__":
+    user_input = input("Введите строку: ")
+    print("Это корректный IPv4-адрес" if is_ip_address(user_input) else "Это НЕ IPv4-адрес")
+
+# print(is_ip_address("192.168.0.1"))    # True
+# print(is_ip_address("255.255.255.255")) # True
+# print(is_ip_address("256.100.50.25"))   # False (256 > 255)
+# print(is_ip_address("192.168.1"))       # False (не хватает октета)
+# print(is_ip_address("abc.def.ghi.jkl")) # False
