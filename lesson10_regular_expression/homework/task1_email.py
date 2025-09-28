@@ -1,9 +1,10 @@
 # Завдання 1. Перевірка валідності email
-# Напишіть функцію, яка перевіряє, чи є email-адреса валідною. Email вважається валідним, якщо він має формат example@domain.com, де:
-#
-# example — послідовність з букв, цифр або точок (але точка не може бути на початку або в кінці).
+# Напишіть функцію, яка перевіряє, чи є email-адреса валідною.
+# Email вважається валідним, якщо він має формат example@domain.com, де:
+# example — послідовність з букв, цифр або точок
+# (але точка не може бути на початку або в кінці).
 # domain — послідовність з букв або цифр.
-# .com, .net, .org тощо — домен верхнього рівня (TLD) довжиною від 2 до 6 символів.
+# .com, .net, тощо — домен верхнього рівня (TLD) довжиною від 2 до 6 символів.
 import re
 
 
@@ -30,7 +31,8 @@ def is_valid_email(email: str) -> bool:
 print(f"test@domain.com: {is_valid_email('test@domain.com')}")
 print(f"a1.b2@c3.net: {is_valid_email('a1.b2@c3.net')}")
 print(f"user123@d.co: {is_valid_email('user123@d.co')}")
-print(f"long.user.name@short.com: {is_valid_email('long.user.name@short.com')}")
+print(f"long.user.name@short.com: "
+      f"{is_valid_email('long.user.name@short.com')}")
 
 # Невалідні
 print(f".user@domain.com: {is_valid_email('.user@domain.com')}")

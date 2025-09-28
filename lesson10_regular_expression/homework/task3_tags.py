@@ -12,12 +12,13 @@ def extract_hashtags(text: str) -> List[str]:
     :param text: Вхідний текст
     :return: List[str]: Список знайдених хештегів
     """
-    #           \w+ — одна або більше "словесних" символів: (a-z, A-Z), цифри (0–9) і підкреслення _
+    #  \w+ — одна або більше символів: (a-z, A-Z), цифри (0–9) і підкр _
     pattern = r'#\w+'
     return re.findall(pattern, text)
 
 
-text = "Сьогодні я вчу #Python, #100DaysOfCode і читаю про #AI_технології!zscdasf #fefvsdgvs RRRRR"
+text = """Сьогодні я вчу #Python, #100DaysOfCode і
+    читаю про #AI_технології!zscdasf #fefvsdgvs RRRRR"""
 hashtags = extract_hashtags(text)
 
 print(hashtags)

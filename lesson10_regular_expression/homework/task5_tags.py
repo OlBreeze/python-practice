@@ -6,7 +6,23 @@ import re
 
 def remove_html_tags(text: str) -> str:
     """
-    Видаляє всі HTML-теги з тексту.
+        Видаляє всі HTML-теги з переданого рядка.
+
+        Функція знаходить усі підрядки, що починаються з символа '<'
+        і закінчуються символом '>', та видаляє їх.
+
+        Args:
+            text (str): Вхідний рядок, який може містити HTML-теги.
+
+        Returns:
+            str: Рядок без HTML-тегів.
+
+        Приклади:
+            >>> remove_html_tags("<p>Hello <b>World</b></p>")
+            'Hello World'
+
+            >>> remove_html_tags("No tags here")
+            'No tags here'
     """
     clean_text = re.sub(r'<[^>]+>', '', text)
     return clean_text

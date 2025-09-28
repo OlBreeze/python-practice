@@ -1,19 +1,34 @@
 # Завдання 6. Перевірка валідності пароля
-# Напишіть функцію, яка перевіряє, чи є пароль надійним. Пароль вважається надійним, якщо він:
+# Напишіть функцію, яка перевіряє, чи є пароль надійним. Пароль надійним:
 #
 # містить як мінімум 8 символів,
 # містить принаймні одну цифру,
 # має хоча б одну велику літеру та одну малу,
 # містить хоча б один спеціальний символ (@, #, $, %, &, тощо).
+
+
+# import string  # string.punctuation
 import re
-import string #string.punctuation
 
 
 def is_strong_password(password: str) -> bool:
     """
     Перевіряє, чи є пароль надійним.
+
+    Args:
+        password (str): Пароль для перевірки.
+
+    Returns:
+        bool: True, якщо пароль відповідає вимогам, False інакше.
+
+    Приклади:
+        >>> is_strong_password("Weak123")
+        False
+        >>> is_strong_password("StrongPass1!")
+        True
     """
-    special_chars = "@#$%&!?*-_"
+
+    # special_chars = "@#$%&!?*-_"
     special_chars = "!@#$%^&*(),.?:{}|<>"
 
     if len(password) < 8:
@@ -40,7 +55,7 @@ def is_strong_password(password: str) -> bool:
 
 
 print(is_strong_password("Pass123"))  # False замало символів
-print(is_strong_password("password123"))  # False немає великої літери та спецсимволу
+print(is_strong_password("password123"))  # False немає спецсимволу
 print(is_strong_password("Password123"))  # False немає спецсимволу
 print(is_strong_password("Password@123"))  # True
 print(is_strong_password("12345678!"))  # False немає літер
