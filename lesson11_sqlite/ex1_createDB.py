@@ -1,5 +1,5 @@
 import sqlite3
-conn = sqlite3.connect('test.db')
+conn = sqlite3.connect('../lesson11_sql-light/test.db')
 cursor = conn.cursor()
 
 cursor.execute('''CREATE TABLE IF NOT EXISTS users (
