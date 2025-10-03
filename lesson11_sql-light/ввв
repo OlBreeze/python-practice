@@ -1,0 +1,20 @@
+add_movie
+add_actor
+add_actors_to_movie
+
+connect
+create_custom_function
+close
+
+show_all_actors
+show_movies_with_actors     JOIN 9
+show_unique_genres          DISTINCT
+count_movies_by_genre       COUNT
+avg_actor_birth_year_by_genre   AVG
+search_movies_by_title      LIKE
+show_movies_paginated       LIMIT
+show_actors_and_movies_union    UNION
+show_movies_with_age        9
+
+
+8 - INNER JOIN
