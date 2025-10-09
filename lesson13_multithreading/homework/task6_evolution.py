@@ -8,6 +8,7 @@ class Organism:
     """
     Клас, що представляє організм з основними характеристиками.
     """
+
     def __init__(self, energy: int = 10, age: int = 0):
         self.energy = energy
         self.age = age
@@ -15,7 +16,8 @@ class Organism:
 
     def live(self) -> List['Organism']:
         """
-        Один цикл життя організму: споживання їжі, старіння, смерть, розмноження.
+        Один цикл життя організму:
+        споживання їжі, старіння, смерть, розмноження.
 
         :return: список нових нащадків (може бути порожнім)
         """
@@ -32,7 +34,8 @@ class Organism:
 
         if self.energy <= 0 or self.age > 10:
             self.alive = False
-            print(f"💀 Організм помер (вік: {self.age}, енергія: {self.energy})")
+            print(f"💀 Організм помер (вік: {self.age}, "
+                  f"енергія: {self.energy})")
             return []
 
         # Розмноження
@@ -41,12 +44,14 @@ class Organism:
             self.energy -= 5
             child = Organism(energy=5)
             offspring.append(child)
-            print(f"🍼 Новий організм народився! (від батька з енергією: {self.energy})")
+            print(f"🍼 Новий організм народився! "
+                  f"(від батька з енергією: {self.energy})")
 
         return offspring
 
 
-def process_organism(org: Organism, new_offspring: List[Organism], lock: threading.Lock) -> None:
+def process_organism(org: Organism, new_offspring: List[Organism],
+                     lock: threading.Lock) -> None:
     """
     Обробляє одного організму в окремому потоці.
 
@@ -59,7 +64,8 @@ def process_organism(org: Organism, new_offspring: List[Organism], lock: threadi
         new_offspring.extend(offspring)
 
 
-def simulate_population(population: List[Organism], generations: int = 10) -> None:
+def simulate_population(population: List[Organism],
+                        generations: int = 10) -> None:
     """
     Запускає симуляцію популяції на задану кількість поколінь.
 
@@ -74,7 +80,8 @@ def simulate_population(population: List[Organism], generations: int = 10) -> No
         new_organisms: List[Organism] = []
 
         for org in population:
-            thread = threading.Thread(target=process_organism, args=(org, new_organisms, lock))
+            thread = threading.Thread(target=process_organism,
+                                      args=(org, new_organisms, lock))
             thread.start()
             threads.append(thread)
 
@@ -98,6 +105,3 @@ def simulate_population(population: List[Organism], generations: int = 10) -> No
 if __name__ == "__main__":
     initial_population = [Organism() for _ in range(10)]
     simulate_population(initial_population, generations=10)
-
-
-

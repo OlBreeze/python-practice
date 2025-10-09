@@ -39,12 +39,15 @@ def parallel_search(filenames: List[str], keyword: str) -> None:
     threads: List[threading.Thread] = []
 
     for filename in filenames:
-        thread = threading.Thread(target=search_in_file,
-                                  args=(filename, keyword))  # Створює окремий потік для кожного файлу.
+        # Створює окремий потік для кожного файлу.
+        thread = threading.Thread(
+            target=search_in_file,
+            args=(filename, keyword))
         thread.start()
         threads.append(thread)
         # thread.join() Запускается первый поток.
-        # Программа сразу ждёт, пока он закончит. Только после этого запускается второй поток. Неправильно
+        # Программа сразу ждёт, пока он закончит.
+        # Только после этого запускается второй поток. Неправильно
 
     # Очікуємо завершення всіх потоків
     # Все потоки запускаются почти одновременно.

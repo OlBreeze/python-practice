@@ -1,7 +1,8 @@
 # Задача 4: створення веб-сервера, що обслуговує кілька клієнтів одночасно
-# Напишіть простий веб-сервер, який може обслуговувати кілька клієнтів одночасно,
-# використовуючи потоки або процеси.
-# Ваша програма повинна відповідати на HTTP-запити клієнтів і відправляти їм текстові повідомлення.
+# Напишіть простий веб-сервер, який може обслуговувати кілька
+# клієнтів одночасно, використовуючи потоки або процеси.
+# Ваша програма повинна відповідати на HTTP-запити клієнтів
+# і відправляти їм текстові повідомлення.
 #
 # Підказка: можна використовувати вбудовану бібліотеку http.server.
 
@@ -24,7 +25,9 @@ class SimpleRequestHandler(BaseHTTPRequestHandler):
         self.send_response(200)  # HTTP статус OK
         self.send_header("Content-type", "text/plain; charset=utf-8")
         self.end_headers()
-        self.wfile.write(message.encode("utf-8")) # Отправляет тело ответа (сам текст) клиенту (байты, а не строку)
+
+        # Отправляет тело ответа (сам текст) клиенту (байты, а не строку)
+        self.wfile.write(message.encode("utf-8"))
 
 
 class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
@@ -48,7 +51,8 @@ def run_server(server_address: Tuple[str, int]) -> None:
     httpd = ThreadedHTTPServer(server_address, SimpleRequestHandler)
     print(f"Сервер запущено на http://{server_address[0]}:{server_address[1]}")
     try:
-        httpd.serve_forever() # Запускає сервер у нескінченному циклі, поки не буде вручну зупинено.
+        # Запускає сервер у нескінченному циклі, поки не буде вручну зупинено.
+        httpd.serve_forever()
     except KeyboardInterrupt:
         print("\nСервер зупинено.")
     finally:

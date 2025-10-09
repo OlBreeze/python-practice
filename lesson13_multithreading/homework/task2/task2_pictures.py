@@ -1,7 +1,8 @@
 # Задача 2: паралельна обробка зображень
 # Напишіть програму, яка обробляє кілька зображень одночасно
 # (наприклад, змінює їх розмір або застосовує фільтр).
-# Використовуйте модуль concurrent.futures і виконуйте обробку зображень у кількох процесах або потоках.
+# Використовуйте модуль concurrent.futures
+# і виконуйте обробку зображень у кількох процесах або потоках.
 #
 # Підказка: можна використовувати бібліотеку Pillow для обробки зображень.
 
@@ -11,9 +12,12 @@ import os
 from typing import List
 
 
-def process_image(image_path: str, output_dir: str, size: tuple[int, int]) -> None:
+def process_image(image_path: str,
+                  output_dir: str,
+                  size: tuple[int, int]) -> None:
     """
-    Обробляє одне зображення: змінює його розмір та застосовує фільтр, після чого зберігає результат.
+    Обробляє одне зображення: змінює його розмір
+    та застосовує фільтр, після чого зберігає результат.
 
     Parameters:
         image_path (str): Шлях до вхідного зображення.
@@ -43,7 +47,8 @@ def process_image(image_path: str, output_dir: str, size: tuple[int, int]) -> No
         print(f"❌ Помилка при обробці {image_path}: {e}")
 
 
-def batch_process_images(image_paths: List[str], output_dir: str, size: tuple[int, int]) -> None:
+def batch_process_images(image_paths: List[str],
+                         output_dir: str, size: tuple[int, int]) -> None:
     """
     Обробляє список зображень паралельно.
 

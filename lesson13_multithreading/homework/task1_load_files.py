@@ -4,11 +4,13 @@
 # використовувати модуль threading для створення декількох потоків,
 # кожен з яких відповідає за завантаження окремого файлу.
 #
-# Підказка: використайте бібліотеки requests або urllib для завантаження файлів.
+# Підказка:
+# використайте бібліотеки requests або urllib для завантаження файлів.
 
 from concurrent.futures import ThreadPoolExecutor
 import requests
 from typing import Dict
+
 
 def download_file(url: str, filename: str) -> None:
     """
@@ -24,7 +26,8 @@ def download_file(url: str, filename: str) -> None:
     try:
         print(f"Завантажую {filename} ...")
         response = requests.get(url, timeout=10)  # надсилаємо HTTP GET-запит
-        response.raise_for_status()  # викликає помилку, якщо статус-код 4xx або 5xx
+        # викликає помилку, якщо статус 4xx або 5xx:
+        response.raise_for_status()
 
         # записуємо вміст відповіді у файл
         with open(filename, "wb") as f:
@@ -34,19 +37,23 @@ def download_file(url: str, filename: str) -> None:
     except requests.exceptions.RequestException as e:
         print(f"Не вдалося завантажити {filename}: {e}")
 
-# Словник URL-адрес та відповідних імен файлів
-files: Dict[str, str] = { # URL, ім’я файлу, під яким зберегти результат
-    "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf": "file1.pdf",
-    "https://www.learningcontainer.com/wp-content/uploads/2020/04/sample-text-file.txt": "file2.txt",
-    "https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4": "file3.mp4",
-    "https://example.com/notfoundfile.zip": "file4.zip"  # цей файл викличе помилку 404
+
+# Словник: URL-адрес та ім’я файлу, під яким зберегти результат
+files: Dict[str, str] = {
+    "https://www.w3.org/WAI/ER/resources/pdf/dummy.pdf":
+        "file1.pdf",
+    "https://www.learningcontainer.com/sample-text-file.txt":
+        "file2.txt",
+    "https://www.learningcontainer.com/sample-mp4-file.mp4":
+        "file3.mp4",
+    "https://example.com/notfoundfile.zip": "file4.zip"
+    # notfoundfile.zip": "file4.zip"  # цей файл викличе помилку 404
 }
 
 # Використовуємо ThreadPoolExecutor для паралельного завантаження файлів
 with ThreadPoolExecutor(max_workers=3) as executor:
     for url, filename in files.items():
         executor.submit(download_file, url, filename)
-
 
 # Result
 # Завантажую file1.pdf ...
@@ -55,5 +62,6 @@ with ThreadPoolExecutor(max_workers=3) as executor:
 # file1.pdf готово!
 # Завантажую file4.zip ...
 # file2.txt готово!
-# Не вдалося завантажити file4.zip: 404 Client Error: Not Found for url: https://example.com/notfoundfile.zip
+# Не вдалося завантажити file4.zip: 404 Client Error:
+#   Not Found for url: https://example.com/notfoundfile.zip
 # file3.mp4 готово!

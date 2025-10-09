@@ -35,13 +35,15 @@ def parallel_sum(array: List[int], num_processes: int) -> int:
     """
     # Ділимо масив на частини для кожного процесу
     chunk_size: int = len(array) // num_processes
-    chunks: List[List[int]] = [array[i:i + chunk_size] for i in range(0, len(array), chunk_size)]
+    chunks: List[List[int]] = [array[i:i + chunk_size]
+                               for i in range(0, len(array), chunk_size)]
 
     # Обробка в пулі процесів
     with Pool(processes=num_processes) as pool:
         partial_sums: List[int] = pool.map(chunk_sum, chunks)
-        # Функція map() виконує вказану функцію до кожного елементу ітерованого об'єкта
-        # (списку, кортежу тощо) та повертає ітератор, який містить результати.
+        # Функція map() виконує вказану функцію до кожного
+        # елементу ітерованого об'єкта (списку, кортежу тощо)
+        # та повертає ітератор, який містить результати.
 
     # Повертаємо загальну суму
     return sum(partial_sums)

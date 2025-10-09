@@ -1,13 +1,17 @@
 # Задача 7: обчислення факторіалу великих чисел
 # Напишіть програму, яка обчислює факторіал великого числа
-# за допомогою декількох потоків або процесів, розподіляючи обчислення між ними.
+# за допомогою декількох потоків або процесів,
+# розподіляючи обчислення між ними.
 
-import multiprocessing
 import sys
 from functools import reduce
+import multiprocessing
 from typing import Tuple
-import math
-sys.set_int_max_str_digits(1000000)  # Підвищує ліміт для конвертації int -> str. обмеження - за замовчуванням 4300 цифр
+
+# Підвищує ліміт для конвертації int -> str.
+# обмеження - за замовчуванням 4300 цифр
+sys.set_int_max_str_digits(1000000)
+
 
 def partial_factorial(start: int, end: int) -> int:
     """
@@ -55,7 +59,8 @@ def parallel_factorial(n: int, num_processes: int = None) -> int:
 
     Parameters:
         n (int): Число, факторіал якого потрібно обчислити.
-        num_processes (int, optional): Кількість процесів. Якщо None, береться кількість CPU ядер.
+        num_processes (int, optional): Кількість процесів.
+        Якщо None, береться кількість CPU ядер.
 
     Returns:
         int: Факторіал числа n.
@@ -85,5 +90,5 @@ if __name__ == "__main__":
     result = parallel_factorial(n)
     end_time = time.time()
 
-    print(f"Факторіал {n} обчислено (довжина результату: {len(str(result))} цифр)")
+    print(f"Факторіал {n} (довжина результату: {len(str(result))} цифр)")
     print(f"Час виконання: {end_time - start_time:.2f} секунд")
