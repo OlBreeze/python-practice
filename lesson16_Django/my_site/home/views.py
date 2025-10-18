@@ -114,3 +114,17 @@ def event_view(request: HttpRequest, year: str, month: str, day: str) -> HttpRes
         'full_date': f"{year}-{month}-{day}"
     }
     return render(request, 'home/event.html', context)
+
+
+def custom_404(request, exception):
+    """
+    Кастомна сторінка 404.
+
+    Аргументи:
+        request: HTTP-запит від клієнта
+        exception: виняток, що викликав 404
+
+    Повертає:
+        HttpResponse: відрендерений шаблон 404.html зі статусом 404
+    """
+    return render(request, '404.html', status=404)
