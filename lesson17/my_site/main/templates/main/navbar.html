@@ -1,0 +1,10 @@
+<nav class="navbar">
+        <div class="logo">
+            <a href="{% url 'main:home' %}">🚀 Django Сайт</a>
+        </div>
+        <ul class="nav-menu">
+            <li><a href="{% url 'main:home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">Головна</a></li>
+            <li><a href="{% url 'main:about' %}" class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">Про сайт</a></li>
+            <li><a href="{% url 'main:contact' %}" class="{% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Контакти</a></li>
+        </ul>
+</nav>

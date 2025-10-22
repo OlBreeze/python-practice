@@ -1,0 +1,20 @@
+{% extends 'main/base.html' %}
+
+{% block title %}{{ title }} - Мій Django Сайт{% endblock %}
+
+{% block content %}
+<div class="about-content">
+    <h1>Про наш сайт</h1>
+    <p>{{ description }}</p>
+    <div class="about-section">
+        <h2>💡 Технології</h2>
+        <div class="tech-stack">
+            <span class="tech-badge">Python</span>
+            <span class="tech-badge">Django</span>
+            <span class="tech-badge">HTML5</span>
+            <span class="tech-badge">CSS3</span>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

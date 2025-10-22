@@ -1,0 +1,25 @@
+{% extends 'main/base.html' %}
+
+{% block title %}{{ title }} - Мій Django Сайт{% endblock %}
+
+{% block content %}
+<div class="contact-content">
+    <h1>Зв'яжіться з нами</h1>
+
+    <div class="contact-info">
+
+        <div class="contact-card">
+            <div class="contact-icon">📱</div>
+            <h3>Телефон</h3>
+            <p><a href="tel:{{ contacts.phone }}">{{ contacts.phone }}</a></p>
+        </div>
+
+    </div>
+
+    <div class="contact-message">
+        <h2>Ми завжди раді вашим запитанням!</h2>
+        <p>Звертайтесь до нас будь-яким зручним способом.</p>
+    </div>
+</div>
+
+{% endblock %}

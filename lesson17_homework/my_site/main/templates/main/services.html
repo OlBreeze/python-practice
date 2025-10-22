@@ -1,0 +1,71 @@
+{% extends 'main/base.html' %}
+
+{% block title %}{{ title }} - МійСайт{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-10 mx-auto">
+        <h1 class="mb-4">{{ title|upper }}</h1>
+        
+        <div class="alert alert-info">
+            <strong>Всього послуг:</strong> {{ total_services }} послуг{{ total_services|pluralize:"а,и,и" }}
+        </div>
+
+        <div class="alert alert-secondary">
+            <strong>Останнє оновлення:</strong> {{ last_updated|date:"d.m.Y" }}
+        </div>
+
+        <h3 class="mt-4 mb-3">Топ-3 популярні послуги:</h3>
+        <div class="row mb-4">
+            {% for service in services|slice:":3" %}
+            <div class="col-md-4 mb-3">
+                <div class="card h-100 border-primary">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">{{ service.name|upper }}</h5>
+                        <p class="card-text">{{ service.description|truncatechars:80 }}</p>
+                        <p class="text-success"><strong>{{ service.price }}</strong></p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <h3 class="mt-5 mb-3">Всі наші послуги ({{ services|length }} шт.):</h3>
+        
+        {% for service in services %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h5 class="card-title">{{ forloop.counter }}. {{ service.name }}</h5>
+                        <p class="card-text">{{ service.description }}</p>
+                        <p class="text-muted small">
+                            Позиція в списку: {{ forloop.counter }} з {{ services|length }}
+                        </p>
+                    </div>
+                    <div class="col-md-4 text-end">
+                        <p class="h5 text-success">{{ service.price }}</p>
+                        {% if service.available %}
+                            <span class="badge bg-success">Доступно</span>
+                        {% else %}
+                            <span class="badge bg-secondary">Недоступно</span>
+                        {% endif %}
+                        <p class="mt-2 small text-muted">
+                            Статус: {{ service.available|yesno:"Активна,Неактивна,Невідомо" }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="alert alert-warning">
+            Послуги наразі недоступні
+        </div>
+        {% endfor %}
+
+        <div class="text-center mt-4">
+            <a href="{% url 'main:contact' %}" class="btn btn-primary btn-lg">Замовити послугу</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

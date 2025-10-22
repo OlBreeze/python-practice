@@ -1,0 +1,40 @@
+{% extends 'main/base.html' %}
+
+{% block title %}{{ title }} - МійСайт{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <h1 class="mb-4">{{ title|upper }}</h1>
+        
+        <div class="card mb-4">
+            <div class="card-body">
+                <h3 class="card-title">{{ company_name }}</h3>
+                <p class="card-text">{{ description }}</p>
+                <p class="card-text"><strong>Рік заснування:</strong> {{ founded_year }}</p>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Наша Місія</h4>
+            </div>
+            <div class="card-body">
+                <p class="card-text">{{ mission }}</p>
+            </div>
+        </div>
+
+        <div class="alert alert-info">
+            <strong>Останнє оновлення:</strong> {{ last_updated|date:"d F Y" }}
+        </div>
+
+        <div class="alert alert-success">
+            <strong>Контактна інформація доступна:</strong> {{ has_contact|yesno:"Так,Ні,Невідомо" }}
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="{% url 'main:contact' %}" class="btn btn-primary btn-lg">Зв'язатися з нами</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

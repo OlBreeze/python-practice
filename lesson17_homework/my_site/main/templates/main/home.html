@@ -1,0 +1,42 @@
+{% extends 'main/base.html' %}
+
+{% block title %}{{ title }} - МійСайт{% endblock %}
+
+{% block content %}
+<div class="jumbotron bg-light p-5 rounded">
+    <h1 class="display-4">{{ welcome_message|upper }}</h1>
+    <p class="lead">{{ description|truncatechars:120 }}</p>
+    <hr class="my-4">
+    <p>Сьогодні: <strong>{{ current_date|date:"d E Y р." }}</strong></p>
+    <p class="text-muted">Час оновлення: {{ current_date|date:"H:i" }}</p>
+    <a class="btn btn-primary btn-lg" href="{% url 'main:services' %}" role="button">Наші послуги</a>
+    <a class="btn btn-outline-secondary btn-lg" href="{% url 'main:about' %}" role="button">Дізнатися більше</a>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <h5 class="card-title">🚀 Інновації</h5>
+                <p class="card-text">Використовуємо найсучасніші технології</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <h5 class="card-title">⭐ Якість</h5>
+                <p class="card-text">Гарантуємо високу якість наших послуг</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <h5 class="card-title">💼 Професіоналізм</h5>
+                <p class="card-text">Наша команда - це досвідчені спеціалісти</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

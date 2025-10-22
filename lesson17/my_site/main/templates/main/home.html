@@ -1,0 +1,18 @@
+{% extends 'main/base.html' %}
+
+{% block title %}{{ title }} - Мій Django Сайт{% endblock %}
+
+{% block content %}
+<div class="home-content">
+    <h1>{{ welcome_message }}</h1>
+    <p class="subtitle">Вітаємо вас</p>
+
+    <div class="features">
+        <div class="feature-card">
+            <div class="feature-icon">🔒</div>
+            <h3>Безпека</h3>
+            <p>Вбудовані механізми захисту від загроз</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

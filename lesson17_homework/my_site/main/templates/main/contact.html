@@ -1,0 +1,62 @@
+{% extends 'main/base.html' %}
+
+{% block title %}{{ title }} - МійСайт{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <h1 class="mb-4">{{ title|upper }}</h1>
+        
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Як з нами зв'язатися</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>📍 Адреса</h5>
+                        <p>{{ address|default:"Адреса не вказана" }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>📞 Телефон</h5>
+                        <p>{{ phone|default:"Телефон не вказаний" }}</p>
+                    </div>
+                </div>
+                
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <h5>✉️ Email</h5>
+                        <p>{{ email|default:"Email не вказаний" }}</p>
+                        <p><small class="text-muted">Email доступний: {{ has_email|yesno:"Так,Ні" }}</small></p>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>🕒 Години роботи</h5>
+                        <p>{{ working_hours|default:"Графік не вказаний" }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title">Напишіть нам</h5>
+                <form>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Ім'я</label>
+                        <input type="text" class="form-control" id="name" placeholder="Ваше ім'я">
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" placeholder="your@email.com">
+                    </div>
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Повідомлення</label>
+                        <textarea class="form-control" id="message" rows="4" placeholder="Ваше повідомлення"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Відправити</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
