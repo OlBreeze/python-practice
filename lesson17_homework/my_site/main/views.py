@@ -3,7 +3,6 @@ from django.views import View
 from datetime import datetime
 
 
-# Функціональні відображення
 def home(request):
     """Головна сторінка"""
     context = {
@@ -30,7 +29,6 @@ def about(request):
     return render(request, 'main/about.html', context)
 
 
-# Класові відображення
 class ContactView(View):
     """Контактна сторінка"""
 
