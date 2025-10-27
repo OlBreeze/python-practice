@@ -5,11 +5,8 @@
 деталей оголошень, категорій та статистики.
 """
 
-from typing import Any
-from datetime import timedelta
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpRequest, HttpResponse
-from django.utils import timezone
 from django.db.models import Count, Q, QuerySet
 from .models import Ad, Category, Comment
 
