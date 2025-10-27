@@ -1,0 +1,48 @@
+{% extends 'board/base.html' %}
+
+{% block content %}
+<h2>Статистика</h2>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <h3>{{ total_ads }}</h3>
+        <p>Всього оголошень</p>
+    </div>
+    
+    <div class="stat-card" style="background-color: #27ae60;">
+        <h3>{{ active_ads }}</h3>
+        <p>Активних оголошень</p>
+    </div>
+    
+    <div class="stat-card" style="background-color: #e74c3c;">
+        <h3>{{ inactive_ads }}</h3>
+        <p>Неактивних оголошень</p>
+    </div>
+    
+    <div class="stat-card" style="background-color: #f39c12;">
+        <h3>{{ total_comments }}</h3>
+        <p>Всього коментарів</p>
+    </div>
+</div>
+
+<h3>Статистика по категоріях</h3>
+
+<table>
+    <thead>
+        <tr>
+            <th>Категорія</th>
+            <th>Всього оголошень</th>
+            <th>Активних оголошень</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for category in categories_stats %}
+        <tr>
+            <td><a href="{% url 'board:category_detail' category.id %}">{{ category.name }}</a></td>
+            <td>{{ category.total_ads }}</td>
+            <td>{{ category.active_ads }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

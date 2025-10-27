@@ -1,0 +1,47 @@
+{% extends 'board/base.html' %}
+
+{% block content %}
+<h2>{{ ad.title }}</h2>
+
+<div class="ad-card">
+    <p class="price">{{ ad.price }} грн</p>
+    
+    <div style="margin: 1.5rem 0;">
+        <h3>Опис</h3>
+        <p>{{ ad.description }}</p>
+    </div>
+    
+    <div class="meta">
+        <p><strong>Категорія:</strong> <a href="{% url 'board:category_detail' ad.category.id %}">{{ ad.category.name }}</a></p>
+        <p><strong>Автор:</strong> {{ ad.user.username }}</p>
+        {% if ad.user.profile.phone_number %}
+            <p><strong>Телефон:</strong> {{ ad.user.profile.phone_number }}</p>
+        {% endif %}
+        {% if ad.user.profile.address %}
+            <p><strong>Адреса:</strong> {{ ad.user.profile.address }}</p>
+        {% endif %}
+        <p><strong>Створено:</strong> {{ ad.created_at|date:"d.m.Y H:i" }}</p>
+        <p><strong>Оновлено:</strong> {{ ad.updated_at|date:"d.m.Y H:i" }}</p>
+        <p><strong>Статус:</strong> {% if ad.is_active %}Активне{% else %}Неактивне{% endif %}</p>
+    </div>
+</div>
+
+<div style="margin-top: 2rem;">
+    <h3>Коментарі ({{ comments_count }})</h3>
+    
+    {% if comments %}
+        {% for comment in comments %}
+        <div class="comment">
+            <p><strong>{{ comment.user.username }}</strong> - {{ comment.created_at|date:"d.m.Y H:i" }}</p>
+            <p>{{ comment.content }}</p>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>Коментарів поки немає.</p>
+    {% endif %}
+</div>
+
+<p style="margin-top: 2rem;">
+    <a href="{% url 'board:ad_list' %}" class="btn">Назад до списку</a>
+</p>
+{% endblock %}

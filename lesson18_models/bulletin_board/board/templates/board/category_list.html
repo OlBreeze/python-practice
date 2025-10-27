@@ -1,0 +1,22 @@
+{% extends 'board/base.html' %}
+
+{% block content %}
+<h2>Категорії</h2>
+
+{% if categories %}
+    {% for category in categories %}
+    <div class="category-card">
+        <h3><a href="{% url 'board:category_detail' category.id %}">{{ category.name }}</a></h3>
+        {% if category.description %}
+            <p>{{ category.description }}</p>
+        {% endif %}
+        <p class="meta">
+            Активних оголошень: <strong>{{ category.active_ads_count }}</strong>
+        </p>
+        <a href="{% url 'board:category_detail' category.id %}" class="btn">Переглянути оголошення</a>
+    </div>
+    {% endfor %}
+{% else %}
+    <p>Категорій поки немає.</p>
+{% endif %}
+{% endblock %}

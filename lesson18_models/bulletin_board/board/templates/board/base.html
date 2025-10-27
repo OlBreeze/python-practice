@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Дошка оголошень</title>
+    <!-- Підключення CSS -->
+    <link rel="stylesheet" href="{% static 'board/css/base.css' %}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Дошка оголошень</h1>
+            <nav>
+                <a href="{% url 'board:index' %}">Головна</a>
+                <a href="{% url 'board:ad_list' %}">Оголошення</a>
+                <a href="{% url 'board:category_list' %}">Категорії</a>
+                <a href="{% url 'board:statistics' %}">Статистика</a>
+                <a href="/admin/">Адмін-панель</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Дошка оголошень. Всі права захищено.</p>
+        </div>
+    </footer>
+</body>
+</html>

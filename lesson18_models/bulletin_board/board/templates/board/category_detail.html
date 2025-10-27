@@ -1,0 +1,32 @@
+{% extends 'board/base.html' %}
+
+{% block content %}
+<h2>{{ category.name }}</h2>
+
+{% if category.description %}
+    <p style="margin-bottom: 2rem;">{{ category.description }}</p>
+{% endif %}
+
+<h3>Оголошення в цій категорії</h3>
+
+{% if ads %}
+    {% for ad in ads %}
+    <div class="ad-card">
+        <h3><a href="{% url 'board:ad_detail' ad.id %}">{{ ad.title }}</a></h3>
+        <p>{{ ad.get_short_description }}</p>
+        <p class="price">{{ ad.price }} грн</p>
+        <div class="meta">
+            <span>Автор: {{ ad.user.username }}</span> |
+            <span>{{ ad.created_at|date:"d.m.Y H:i" }}</span>
+        </div>
+        <a href="{% url 'board:ad_detail' ad.id %}" class="btn" style="margin-top: 1rem;">Детальніше</a>
+    </div>
+    {% endfor %}
+{% else %}
+    <p>В цій категорії поки немає оголошень.</p>
+{% endif %}
+
+<p style="margin-top: 2rem;">
+    <a href="{% url 'board:category_list' %}" class="btn">Назад до категорій</a>
+</p>
+{% endblock %}

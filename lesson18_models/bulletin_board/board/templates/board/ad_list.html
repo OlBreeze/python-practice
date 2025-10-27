@@ -1,0 +1,52 @@
+{% extends 'board/base.html' %}
+
+{% block content %}
+<h2>Всі оголошення</h2>
+
+<div class="filter-form">
+    <h3>Фільтри та пошук</h3>
+    <form method="get">
+        <input type="text" name="search" placeholder="Пошук за заголовком" value="{{ request.GET.search }}">
+        
+        <select name="category">
+            <option value="">Всі категорії</option>
+            {% for category in categories %}
+                <option value="{{ category.id }}" {% if request.GET.category == category.id|stringformat:"s" %}selected{% endif %}>
+                    {{ category.name }}
+                </option>
+            {% endfor %}
+        </select>
+        
+        <input type="number" name="min_price" placeholder="Мін. ціна" value="{{ request.GET.min_price }}" step="0.01">
+        <input type="number" name="max_price" placeholder="Макс. ціна" value="{{ request.GET.max_price }}" step="0.01">
+        
+        <select name="sort">
+            <option value="-created_at" {% if request.GET.sort == "-created_at" %}selected{% endif %}>Спочатку нові</option>
+            <option value="created_at" {% if request.GET.sort == "created_at" %}selected{% endif %}>Спочатку старі</option>
+            <option value="price" {% if request.GET.sort == "price" %}selected{% endif %}>Ціна: зростання</option>
+            <option value="-price" {% if request.GET.sort == "-price" %}selected{% endif %}>Ціна: спадання</option>
+        </select>
+        
+        <button type="submit" class="btn">Застосувати</button>
+        <a href="{% url 'board:ad_list' %}" class="btn" style="background-color: #95a5a6;">Скинути</a>
+    </form>
+</div>
+
+{% if ads %}
+    {% for ad in ads %}
+    <div class="ad-card">
+        <h3><a href="{% url 'board:ad_detail' ad.id %}">{{ ad.title }}</a></h3>
+        <p>{{ ad.get_short_description }}</p>
+        <p class="price">{{ ad.price }} грн</p>
+        <div class="meta">
+            <span>Категорія: <strong>{{ ad.category.name }}</strong></span> |
+            <span>Автор: {{ ad.user.username }}</span> |
+            <span>{{ ad.created_at|date:"d.m.Y H:i" }}</span>
+        </div>
+        <a href="{% url 'board:ad_detail' ad.id %}" class="btn" style="margin-top: 1rem;">Детальніше</a>
+    </div>
+    {% endfor %}
+{% else %}
+    <p>За вашим запитом оголошень не знайдено.</p>
+{% endif %}
+{% endblock %}
