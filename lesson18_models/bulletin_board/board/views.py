@@ -4,12 +4,14 @@
 Цей модуль містить функції для відображення списків оголошень,
 деталей оголошень, категорій та статистики.
 """
-
-from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpRequest, HttpResponse
-from django.db.models import Count, Q, QuerySet
-from .models import Ad, Category, Comment
+from django.db.models import Count, Q
 
+from .forms import AdCreateForm, AdUpdateForm, CommentForm
+from .models import Ad, Category, Comment
+from django.contrib import messages
 
 def index(request: HttpRequest) -> HttpResponse:
     """
@@ -194,3 +196,195 @@ def statistics(request: HttpRequest) -> HttpResponse:
         'title': 'Статистика'
     }
     return render(request, 'board/statistics.html', context)
+
+
+@login_required
+def ad_create(request: HttpRequest) -> HttpResponse:
+    """
+    Створення нового оголошення.
+
+    GET: Відображає форму для створення оголошення
+    POST: Обробляє дані форми та створює нове оголошення
+
+    Args:
+        request: HTTP запит
+
+    Returns:
+        HttpResponse: Відрендерена сторінка з формою або редірект
+    """
+    if request.method == 'POST':
+        form = AdCreateForm(request.POST)
+        if form.is_valid():
+            # Зберегти оголошення з поточним користувачем
+            ad = form.save(user=request.user)
+
+            messages.success(
+                request,
+                f'Оголошення "{ad.title}" успішно створено!'
+            )
+            return redirect('board:ad_detail', ad_id=ad.id)
+        else:
+            messages.error(
+                request,
+                'Помилка при створенні оголошення. Перевірте введені дані.'
+            )
+    else:
+        form = AdCreateForm()
+
+    context = {
+        'form': form,
+        'title': 'Створити оголошення',
+        'button_text': 'Створити'
+    }
+    return render(request, 'board/ad_form.html', context)
+
+
+@login_required
+def ad_update(request: HttpRequest, ad_id: int) -> HttpResponse:
+    """
+    Редагування існуючого оголошення.
+
+    GET: Відображає форму з даними оголошення
+    POST: Оновлює оголошення
+
+    Args:
+        request: HTTP запит
+        ad_id: ID оголошення
+
+    Returns:
+        HttpResponse: Відрендерена сторінка з формою або редірект
+    """
+    ad = get_object_or_404(Ad, id=ad_id)
+
+    # Перевірка: тільки автор може редагувати
+    if ad.user != request.user:
+        messages.error(
+            request,
+            'Ви не можете редагувати це оголошення.'
+        )
+        return redirect('board:ad_detail', ad_id=ad.id)
+
+    if request.method == 'POST':
+        form = AdUpdateForm(request.POST, instance=ad)
+        if form.is_valid():
+            ad = form.save()
+            messages.success(
+                request,
+                f'Оголошення "{ad.title}" успішно оновлено!'
+            )
+            return redirect('board:ad_detail', ad_id=ad.id)
+        else:
+            messages.error(
+                request,
+                'Помилка при оновленні оголошення. Перевірте введені дані.'
+            )
+    else:
+        form = AdUpdateForm(instance=ad)
+
+    context = {
+        'form': form,
+        'ad': ad,
+        'title': f'Редагувати: {ad.title}',
+        'button_text': 'Зберегти зміни'
+    }
+    return render(request, 'board/ad_form.html', context)
+
+
+@login_required
+def ad_delete(request: HttpRequest, ad_id: int) -> HttpResponse:
+    """
+    Видалення оголошення.
+
+    GET: Відображає сторінку підтвердження
+    POST: Видаляє оголошення
+
+    Args:
+        request: HTTP запит
+        ad_id: ID оголошення
+
+    Returns:
+        HttpResponse: Відрендерена сторінка або редірект
+    """
+    ad = get_object_or_404(Ad, id=ad_id)
+
+    # Перевірка: тільки автор може видаляти
+    if ad.user != request.user:
+        messages.error(
+            request,
+            'Ви не можете видалити це оголошення.'
+        )
+        return redirect('board:ad_detail', ad_id=ad.id)
+
+    if request.method == 'POST':
+        ad_title = ad.title
+        ad.delete()
+        messages.success(
+            request,
+            f'Оголошення "{ad_title}" успішно видалено!'
+        )
+        return redirect('board:index')
+
+    context = {
+        'ad': ad,
+        'title': f'Видалити: {ad.title}'
+    }
+    return render(request, 'board/ad_confirm_delete.html', context)
+
+
+@login_required
+def comment_create(request: HttpRequest, ad_id: int) -> HttpResponse:
+    """
+    Додавання коментаря до оголошення.
+
+    POST: Створює новий коментар
+
+    Args:
+        request: HTTP запит
+        ad_id: ID оголошення
+
+    Returns:
+        HttpResponse: Редірект на сторінку оголошення
+    """
+    ad = get_object_or_404(Ad, id=ad_id)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.ad = ad
+            comment.user = request.user
+            comment.save()
+
+            messages.success(
+                request,
+                'Коментар успішно додано!'
+            )
+        else:
+            messages.error(
+                request,
+                'Помилка при додаванні коментаря. Перевірте введені дані.'
+            )
+
+    return redirect('board:ad_detail', ad_id=ad_id)
+
+
+@login_required
+def my_ads(request: HttpRequest) -> HttpResponse:
+    """
+    Сторінка з оголошеннями поточного користувача.
+
+    Args:
+        request: HTTP запит
+
+    Returns:
+        HttpResponse: Відрендерена сторінка
+    """
+    ads = Ad.objects.filter(
+        user=request.user
+    ).select_related('category').order_by('-created_at')
+
+    context = {
+        'ads': ads,
+        'title': 'Мої оголошення'
+    }
+    return render(request, 'board/my_ads.html', context)

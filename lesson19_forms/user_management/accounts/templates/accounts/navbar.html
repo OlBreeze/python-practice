@@ -1,0 +1,59 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'register' %}">
+            <i class="bi bi-person-circle"></i> Профілі користувачів
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                            <a class="nav-link" href="{% url 'users_list' %}">
+                                <i class="bi bi-people-fill"></i> Всі користувачі
+                            </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'profile' user.username %}">
+                            <i class="bi bi-person"></i> Мій профіль
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'edit_profile' %}">
+                            <i class="bi bi-pencil-square"></i> Редагувати профіль
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'change_password' %}">
+                            <i class="bi bi-key"></i> Змінити пароль
+                        </a>
+                    </li>
+                    {% if user.is_superuser or user.is_staff %}
+                        <li class="nav-item">
+                            <a class="nav-link text-warning" href="{% url 'admin:index' %}">
+                                <i class="bi bi-shield-fill-check"></i> Адмін-панель
+                            </a>
+                        </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">
+                            <i class="bi bi-box-arrow-right"></i> Вийти
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">
+                            <i class="bi bi-person-plus"></i> Реєстрація
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">
+                            <i class="bi bi-box-arrow-in-right"></i> Вхід
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

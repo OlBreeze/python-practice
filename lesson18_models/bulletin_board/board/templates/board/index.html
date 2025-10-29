@@ -24,4 +24,16 @@
 {% else %}
     <p>Оголошень поки немає.</p>
 {% endif %}
+
+<!--ee-->
+{% if user.is_authenticated %}
+    <a href="{% url 'board:ad_create' %}" class="btn btn-primary">
+        Створити оголошення
+    </a>
+{% else %}
+    <a href="{% url 'admin:login' %}" class="btn btn-primary">
+        Увійти щоб створити оголошення
+    </a>
+{% endif %}
+<!--ee-->
 {% endblock %}

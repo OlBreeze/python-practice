@@ -40,7 +40,17 @@
         <p>Коментарів поки немає.</p>
     {% endif %}
 </div>
-
+<!--szv-->
+{% if user.is_authenticated %}
+    <form method="post" action="{% url 'board:comment_create' ad.id %}">
+        {% csrf_token %}
+        {{ comment_form.text }}
+        <button type="submit" class="btn btn-primary">Додати коментар</button>
+    </form>
+{% else %}
+    <p>Увійдіть щоб додати коментар</p>
+{% endif %}
+<!--sazsv-->
 <p style="margin-top: 2rem;">
     <a href="{% url 'board:ad_list' %}" class="btn">Назад до списку</a>
 </p>

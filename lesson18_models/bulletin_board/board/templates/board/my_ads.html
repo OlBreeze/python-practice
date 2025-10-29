@@ -1,0 +1,72 @@
+{% extends 'board/base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>{{ title }}</h1>
+        <a href="{% url 'board:ad_create' %}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Створити оголошення
+        </a>
+    </div>
+
+    {% if ads %}
+        <div class="row">
+            {% for ad in ads %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100">
+                    {% if not ad.is_active %}
+                    <div class="card-header bg-warning text-dark">
+                        <small><i class="bi bi-eye-slash"></i> Неактивне</small>
+                    </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ ad.title }}</h5>
+                        <p class="card-text">{{ ad.description|truncatewords:20 }}</p>
+                        <p class="text-primary fw-bold">{{ ad.price }} грн</p>
+                        <p class="text-muted small">
+                            <i class="bi bi-folder"></i> {{ ad.category.name }}<br>
+                            <i class="bi bi-calendar"></i> {{ ad.created_at|date:"d.m.Y" }}
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="btn-group" role="group">
+                            <a href="{% url 'board:ad_detail' ad.id %}" 
+                               class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-eye"></i> Переглянути
+                            </a>
+                            <a href="{% url 'board:ad_update' ad.id %}" 
+                               class="btn btn-sm btn-outline-secondary">
+                                <i class="bi bi-pencil"></i> Редагувати
+                            </a>
+                            <a href="{% url 'board:ad_delete' ad.id %}" 
+                               class="btn btn-sm btn-outline-danger">
+                                <i class="bi bi-trash"></i> Видалити
+                            </a>
+
+<!--                            saf-->
+                            {% if user == ad.user %}
+    <a href="{% url 'board:ad_update' ad.id %}" class="btn btn-warning">
+        Редагувати
+    </a>
+    <a href="{% url 'board:ad_delete' ad.id %}" class="btn btn-danger">
+        Видалити
+    </a>
+{% endif %}
+<!--                            faf-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            <i class="bi bi-info-circle"></i>
+            У вас поки немає оголошень.
+            <a href="{% url 'board:ad_create' %}" class="alert-link">Створити перше оголошення</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

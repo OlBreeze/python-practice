@@ -1,0 +1,49 @@
+{% extends 'board/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0">Створити оголошення</h2>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold text-dark">📝 Заголовок</label>
+                            {{ form.title }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold text-dark">📄 Опис</label>
+                            {{ form.description }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold text-dark">Ціна (грн)</label>
+                            {{ form.price }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold text-dark">Категорія</label>
+                            {{ form.category }}
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-start mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                ✅ Створити
+                            </button>
+                            <a href="{% url 'board:index' %}" class="btn btn-secondary btn-lg">
+                                ❌ Скасувати
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

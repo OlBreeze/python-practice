@@ -1,0 +1,37 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Видалення облікового запису{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+        <div class="card border-danger">
+            <div class="card-header bg-danger text-white">
+                <h3 class="mb-0"><i class="bi bi-exclamation-triangle"></i> Видалення облікового запису</h3>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-danger">
+                    <h5><i class="bi bi-exclamation-circle"></i> Увага!</h5>
+                    <p>Ви збираєтеся видалити свій обліковий запис <strong>{{ user.username }}</strong>.</p>
+                    <p class="mb-0"><strong>Ця дія незворотна!</strong> Всі ваші дані будуть видалені назавжди.</p>
+                </div>
+                
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <p class="mb-3">Якщо ви впевнені, що хочете видалити свій обліковий запис, натисніть кнопку нижче:</p>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{% url 'profile' user.username %}" class="btn btn-secondary">
+                            <i class="bi bi-x-circle"></i> Скасувати
+                        </a>
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-trash"></i> Так, видалити назавжди
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

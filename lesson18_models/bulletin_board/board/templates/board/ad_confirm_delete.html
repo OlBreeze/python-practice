@@ -1,0 +1,48 @@
+{% extends 'board/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h2>{{ title }}</h2>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning">
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                        <strong>Увага!</strong> Ця дія незворотна.
+                    </div>
+
+                    <p>Ви впевнені, що хочете видалити це оголошення?</p>
+
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ ad.title }}</h5>
+                            <p class="card-text">{{ ad.description|truncatewords:30 }}</p>
+                            <p class="text-muted">
+                                <small>
+                                    Категорія: {{ ad.category.name }} | 
+                                    Ціна: {{ ad.price }} грн
+                                </small>
+                            </p>
+                        </div>
+                    </div>
+
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" class="btn btn-danger">
+                                <i class="bi bi-trash"></i> Так, видалити
+                            </button>
+                            <a href="{% url 'board:ad_detail' ad.id %}" class="btn btn-secondary">
+                                <i class="bi bi-x-circle"></i> Скасувати
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
