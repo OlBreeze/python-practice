@@ -60,7 +60,6 @@ class RegisterSerializer(serializers.ModelSerializer):
             })
         return attrs
 
-    # ⬇️ ЦЕЙ МЕТОД ВІДСУТНІЙ У ВАШОМУ КОДІ!
     def create(self, validated_data):
         """
         Створення нового користувача.
