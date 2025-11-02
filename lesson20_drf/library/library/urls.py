@@ -8,7 +8,7 @@ from drf_yasg import openapi
 # Налаштування Swagger/OpenAPI
 schema_view = get_schema_view(
     openapi.Info(
-        title="Library API",
+        title="Library API (Created by Olga and Swagger)",
         default_version='v1',
         description="""
         REST API для управління бібліотекою книг.

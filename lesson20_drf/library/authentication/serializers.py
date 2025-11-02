@@ -60,6 +60,30 @@ class RegisterSerializer(serializers.ModelSerializer):
             })
         return attrs
 
+    # ⬇️ ЦЕЙ МЕТОД ВІДСУТНІЙ У ВАШОМУ КОДІ!
+    def create(self, validated_data):
+        """
+        Створення нового користувача.
+
+        Args:
+            validated_data: Валідовані дані
+
+        Returns:
+            Створений об'єкт User
+        """
+        # Видаляємо password2, оскільки воно не є полем моделі User
+        validated_data.pop('password2')
+
+        # Використовуємо create_user для правильного хешування пароля
+        user = User.objects.create_user(
+            username=validated_data['username'],
+            email=validated_data['email'],
+            password=validated_data['password'],
+            first_name=validated_data.get('first_name', ''),
+            last_name=validated_data.get('last_name', '')
+        )
+        return user
+
 
 class UserSerializer(serializers.ModelSerializer):
     """

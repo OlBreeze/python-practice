@@ -21,13 +21,19 @@ class IsAdminOrReadOnly(permissions.BasePermission):
         Returns:
             True, якщо дозвіл надано, False - інакше
         """
-        # Дозволяємо безпечні методи всім автентифікованим користувачам
-        if request.method in permissions.SAFE_METHODS:
-            return request.user and request.user.is_authenticated
+        # # Дозволяємо безпечні методи всім автентифікованим користувачам
+        # if request.method in permissions.SAFE_METHODS:
+        #     return request.user and request.user.is_authenticated
+        #
+        # # Дозволяємо POST, PUT, PATCH всім автентифікованим користувачам
+        # if request.method in ['POST', 'PUT', 'PATCH']:
+        #     return request.user and request.user.is_authenticated
 
-        # Дозволяємо POST, PUT, PATCH всім автентифікованим користувачам
-        if request.method in ['POST', 'PUT', 'PATCH']:
-            return request.user and request.user.is_authenticated
+        # Разрешаем всё, кроме удаления
+        if request.user.is_authenticated and (
+                request.method in permissions.SAFE_METHODS or request.method in ['POST', 'PUT', 'PATCH']
+        ):
+            return True
 
         # DELETE дозволений тільки адміністраторам
         if request.method == 'DELETE':
@@ -63,4 +69,3 @@ class IsOwnerOrAdmin(permissions.BasePermission):
 
         # PUT, PATCH дозволені власнику або адміністратору
         return obj.user == request.user or request.user.is_staff
-

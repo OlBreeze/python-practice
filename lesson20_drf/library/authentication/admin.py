@@ -1,3 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
+# {
+#   "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc2MjE3Njc3NCwiaWF0IjoxNzYyMDkwMzc0LCJqdGkiOiI4NTZlMDk3NGU4NGY0ZTY5YTFjZTk1OGNkNzU2YmI4ZSIsInVzZXJfaWQiOiIzIn0.fzZBFlkh_R5q-hx9XDwWtky10iJsx7DNynVxKjqH1wI",
+#   "access": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzYyMDkzOTc0LCJpYXQiOjE3NjIwOTAzNzQsImp0aSI6Ijc4ODMwZjlkYWExNjQwOGNhMzQyMDliNDdhMWU0NGU5IiwidXNlcl9pZCI6IjMifQ.jUMnf7BB0shZeZDXySu-t4rAIP0fk8T8Wq86XPIu2bg"
+# }
