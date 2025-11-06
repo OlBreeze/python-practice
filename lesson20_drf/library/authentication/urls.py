@@ -1,4 +1,5 @@
-from django.urls import path
+from os import path
+
 from .views import RegisterView, UserProfileView, ChangePasswordView
 
 urlpatterns = [
