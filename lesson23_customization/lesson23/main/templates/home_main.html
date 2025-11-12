@@ -1,0 +1,8 @@
+{% load custom_filters custom_tags %}
+
+<h1>Добро пожаловать на {{ site_name }}</h1>
+<p>Автор сайта: {{ author }}</p>
+
+<p>Дата создания страницы: {{ some_date|format_date }}</p>
+
+<p>Текущее время: {% current_time %}</p>

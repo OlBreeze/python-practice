@@ -1,0 +1,9 @@
+{% load custom_tags %}
+<h1>{{ site_name }}</h1>
+<p>Текущее время: {% current_time %}</p>
+
+<ul>
+{% for p in products %}
+    <li>{{ p.name|upper }} — {{ p.price }} грн × {{ p.quantity }} = {{ p.total_value }}</li>
+{% endfor %}
+</ul>
