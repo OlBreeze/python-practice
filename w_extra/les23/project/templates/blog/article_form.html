@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if form.instance.pk %}Редагувати{% else %}Створити{% endif %} статтю - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <h1>{% if form.instance.pk %}Редагувати статтю{% else %}Створити нову статтю{% endif %}</h1>
+
+        <form method="post" class="mt-4">
+            {% csrf_token %}
+
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    <h5>Помилки у формі:</h5>
+                    {{ form.errors }}
+                </div>
+            {% endif %}
+
+            <div class="mb-3">
+                <label for="id_title" class="form-label">Заголовок *</label>
+                {{ form.title }}
+                {% if form.title.errors %}
+                    <div class="text-danger">{{ form.title.errors }}</div>
+                {% endif %}
+                <small class="text-muted">Мінімум 10 символів</small>
+            </div>
+
+            <div class="mb-3">
+                <label for="id_slug" class="form-label">URL (slug) *</label>
+                {{ form.slug }}
+                {% if form.slug.errors %}
+                    <div class="text-danger">{{ form.slug.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="id_content" class="form-label">Контент *</label>
+                {{ form.content }}
+                {% if form.content.errors %}
+                    <div class="text-danger">{{ form.content.errors }}</div>
+                {% endif %}
+                <small class="text-muted">Мінімум 50 слів для опублікованих статей</small>
+            </div>
+
+            <div class="mb-3">
+                <label for="id_status" class="form-label">Статус *</label>
+                {{ form.status }}
+                {% if form.status.errors %}
+                    <div class="text-danger">{{ form.status.errors }}</div>
+                {% endif %}
+            </div>
+
+            {% if form.tags %}
+                <div class="mb-3">
+                    <label for="id_tags" class="form-label">Теги</label>
+                    {{ form.tags }}
+                    {% if form.tags.errors %}
+                        <div class="text-danger">{{ form.tags.errors }}</div>
+                    {% endif %}
+                </div>
+            {% endif %}
+
+            {% if form.theme_color %}
+                <div class="mb-3">
+                    <label for="id_theme_color" class="form-label">Колір теми</label>
+                    {{ form.theme_color }}
+                    {% if form.theme_color.errors %}
+                        <div class="text-danger">{{ form.theme_color.errors }}</div>
+                    {% endif %}
+                </div>
+            {% endif %}
+
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">Зберегти</button>
+                <a href="{% url 'blog:article_list' %}" class="btn btn-secondary">Скасувати</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

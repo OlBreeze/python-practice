@@ -1,0 +1,7 @@
+<div class="popular-tags">
+    {% for tag in tags %}
+        <a href="{% url 'blog:tagged_articles' tag.name %}" class="badge bg-primary me-1 mb-1">
+            {{ tag.name }} ({{ tag.article_count }})
+        </a>
+    {% endfor %}
+</div>

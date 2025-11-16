@@ -1,14 +1,39 @@
 django-admin startproject task_manager  
 python manage.py startapp main
  
-python manage.py makemigrations
+python manage.py makemigrations  
 python manage.py migrate
 
 python manage.py createsuperuser
 
 python manage.py runserver
 
+#### Django Debug Toolbar
+pip install django-debug-toolbar
 
+---
+"""
+# Створення міграцій
+python manage.py makemigrations
+
+# Застосування міграцій
+python manage.py migrate
+
+# Створення суперкористувача
+python manage.py createsuperuser
+
+# Збір статичних файлів
+python manage.py collectstatic
+
+# Запуск сервера розробки
+python manage.py runserver
+
+# Перегляд метрик
+python manage.py show_metrics
+
+# Запуск тестів
+python manage.py test blog
+"""
 
 ## 🧩 1. Что такое DRF
 

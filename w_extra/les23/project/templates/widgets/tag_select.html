@@ -1,0 +1,8 @@
+<select {{ widget.attrs|safe }} name="{{ widget.name }}" multiple>
+    {% for value, label in widget.choices %}
+        <option value="{{ value }}"{% if value in widget.value %} selected{% endif %}>
+            {{ label }}
+        </option>
+    {% endfor %}
+</select>
+<small class="form-text text-muted">Утримуйте Ctrl для вибору кількох тегів</small>

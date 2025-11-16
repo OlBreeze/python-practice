@@ -1,0 +1,19 @@
+<div class="card article-card">
+    <div class="card-body">
+        <h3>
+            <a href="{% url 'blog:article_detail' article.slug %}">{{ article.title }}</a>
+        </h3>
+
+        <div class="text-muted mb-2">
+            <small>
+                {{ article.author.username }} |
+                {{ article.created_at|date:"d.m.Y" }} |
+                {{ reading_time }} хв читання
+            </small>
+        </div>
+
+        {% if show_excerpt %}
+            <p>{{ article.content|truncate_words:30 }}</p>
+        {% endif %}
+    </div>
+</div>

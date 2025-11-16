@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load blog_tags %}
+
+{% block title %}Пошук: {{ search_query }} - {{ block.super }}{% endblock %}
+
+{% block content %}
+<h1>Результати пошуку</h1>
+<p>Знайдено: <strong>{{ result_count }}</strong> статей за запитом "<strong>{{ search_query }}</strong>"</p>
+
+{% if articles %}
+    {% for article in articles %}
+        <div class="article-card">
+            <h2>
+                <a href="{% url 'blog:article_detail' article.slug %}">
+                    {{ article.title|highlight_search:search_query }}
+                </a>
+            </h2>
+            <div class="text-muted mb-2">
+                <small>{{ article.author.username }} | {{ article.created_at|date:"d.m.Y" }}</small>
+            </div>
+            <p>{{ article.content|truncate_words:50|highlight_search:search_query }}</p>
+        </div>
+    {% endfor %}
+
+    {% if is_paginated %}
+        <nav aria-label="Pagination">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?q={{ search_query }}&page={{ page_obj.previous_page_number }}">Попередня</a></li>
+                {% endif %}
+                <li class="page-item active"><span class="page-link">{{ page_obj.number }}</span></li>
+                {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="?q={{ search_query }}&page={{ page_obj.next_page_number }}">Наступна</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
+{% else %}
+    <div class="alert alert-info">Нічого не знайдено</div>
+{% endif %}
+{% endblock %}

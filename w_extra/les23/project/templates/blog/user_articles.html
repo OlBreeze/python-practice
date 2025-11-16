@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Статті {{ author.username }} - {{ block.super }}{% endblock %}
+
+{% block content %}
+<h1>Статті автора {{ author.username }}</h1>
+<p>Всього статей: <strong>{{ author_article_count }}</strong></p>
+
+{% for article in articles %}
+    <div class="article-card">
+        <h2><a href="{% url 'blog:article_detail' article.slug %}">{{ article.title }}</a></h2>
+        <div class="text-muted mb-2">
+            <small>{{ article.created_at|date:"d.m.Y" }} | {{ article.views_count }} переглядів</small>
+        </div>
+    </div>
+{% empty %}
+    <p>У цього автора ще немає опублікованих статей</p>
+{% endfor %}
+{% endblock %}

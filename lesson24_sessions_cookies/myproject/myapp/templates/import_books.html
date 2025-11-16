@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Імпорт книг</title>
+    <style>
+        body { font-family: Arial; max-width: 600px; margin: 50px auto; }
+        button { padding: 10px 20px; background: #28a745; color: white; border: none; cursor: pointer; }
+        #status { margin-top: 20px; padding: 15px; background: #f0f0f0; border-radius: 5px; }
+        .progress { width: 100%; background: #ddd; height: 30px; border-radius: 5px; margin: 10px 0; }
+        .progress-bar { height: 100%; background: #28a745; border-radius: 5px; transition: width 0.3s; }
+    </style>
+</head>
+<body>
+    <h2>Імпорт книг з CSV</h2>
+    <button onclick="startImport()">Почати імпорт</button>
+    <div id="status"></div>
+
+    <script>
+        function startImport() {
+            fetch('/import/', {
+                method: 'POST',
+                headers: {'X-CSRFToken': '{{ csrf_token }}'}
+            })
+            .then(r => r.json())
+            .then(data => {
+                checkStatus(data.task_id);
+            });
+        }
+
+        function checkStatus(taskId) {
+            const interval = setInterval(() => {
+                fetch(`/task/${taskId}/`)
+                .then(r => r.json())
+                .then(data => {
+                    const status = document.getElementById('status');
+
+                    if (data.state === 'PROGRESS') {
+                        status.innerHTML = `
+                            <p>Прогрес: ${data.current} / ${data.total}</p>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: ${data.percent}%">${data.percent}%</div>
+                            </div>
+                        `;
+                    } else if (data.state === 'SUCCESS') {
+                        status.innerHTML = `<p>✅ Завершено! Імпортовано: ${data.result.imported}</p>`;
+                        clearInterval(interval);
+                    } else {
+                        status.innerHTML = `<p>Статус: ${data.status}</p>`;
+                    }
+                });
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

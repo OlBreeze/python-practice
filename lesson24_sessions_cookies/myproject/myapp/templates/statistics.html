@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Статистика</title>
+    <style>
+        body { font-family: Arial; max-width: 900px; margin: 20px auto; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background: #28a745; color: white; }
+    </style>
+</head>
+<body>
+    <h2>Статистика авторів</h2>
+    <table>
+        <tr>
+            <th>Автор</th>
+            <th>Середній рейтинг</th>
+            <th>Кількість книг</th>
+            <th>Кількість відгуків</th>
+        </tr>
+        {% for author in authors %}
+        <tr>
+            <td>{{ author.name }}</td>
+            <td>{{ author.avg_rating|floatformat:2 }}</td>
+            <td>{{ author.books_count }}</td>
+            <td>{{ author.reviews_count }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Статистика книг</h2>
+    <table>
+        <tr>
+            <th>Книга</th>
+            <th>Кількість відгуків</th>
+            <th>Середня оцінка</th>
+        </tr>
+        {% for book in books %}
+        <tr>
+            <td>{{ book.title }}</td>
+            <td>{{ book.reviews_count }}</td>
+            <td>{{ book.avg_rating|floatformat:2 }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

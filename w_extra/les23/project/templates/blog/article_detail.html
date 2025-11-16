@@ -1,0 +1,179 @@
+<!-- templates/blog/article_detail.html -->
+{% extends 'base.html' %}
+{% load blog_tags %}
+
+{% block title %}{{ article.title }} - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8">
+        <!-- Хлібні крихти -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                {% for crumb in breadcrumbs %}
+                    {% if crumb.url %}
+                        <li class="breadcrumb-item"><a href="{{ crumb.url }}">{{ crumb.title }}</a></li>
+                    {% else %}
+                        <li class="breadcrumb-item active">{{ crumb.title }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ol>
+        </nav>
+
+        <!-- Стаття -->
+        <article>
+            <h1>{{ article.title }}</h1>
+
+            <div class="text-muted mb-3">
+                <small>
+                    <i class="bi bi-person"></i>
+                    <a href="{% url 'blog:user_articles' article.author.username %}">{{ article.author.username }}</a>
+                    |
+                    <i class="bi bi-calendar"></i> {{ article.created_at|date:"d.m.Y H:i" }}
+                    |
+                    <i class="bi bi-eye"></i> {{ article.views_count }} переглядів
+                    |
+                    <i class="bi bi-clock"></i> {{ statistics.reading_time }} хв читання
+                </small>
+            </div>
+
+            <!-- Статус -->
+            {{ article.status|status_badge }}
+
+            <!-- Теги -->
+            {% if article.tags.all %}
+                <div class="mb-3">
+                    {% for tag in article.tags.all %}
+                        <a href="{% url 'blog:tagged_articles' tag.name %}" class="badge bg-info text-decoration-none">
+                            {{ tag.name }}
+                        </a>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <!-- Кнопки редагування -->
+            {% if user == article.author or user.is_staff %}
+                <div class="mb-3">
+                    <a href="{% url 'blog:article_edit' article.slug %}" class="btn btn-sm btn-warning">Редагувати</a>
+                </div>
+            {% endif %}
+
+            <!-- Контент -->
+            <div class="article-content mt-4">
+                {{ article.content|linebreaks }}
+            </div>
+
+            <!-- Статистика -->
+            <div class="card mt-4 mb-4">
+                <div class="card-body">
+                    <h5>Статистика статті</h5>
+                    <ul class="list-unstyled">
+                        <li><strong>Слів:</strong> {{ statistics.words }}</li>
+                        <li><strong>Символів:</strong> {{ statistics.characters }}</li>
+                        <li><strong>Коментарів:</strong> {{ statistics.comments }}</li>
+                        <li><strong>Переглядів:</strong> {{ statistics.views }}</li>
+                    </ul>
+                </div>
+            </div>
+        </article>
+
+        <!-- Коментарі -->
+        <div class="comments-section mt-5">
+            <h3>Коментарі ({{ comments.count }})</h3>
+
+            <!-- Форма додавання коментаря -->
+            {% if user.is_authenticated %}
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5>Додати коментар</h5>
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <textarea name="content" class="form-control" rows="4" placeholder="Ваш коментар..." required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Відправити</button>
+                        </form>
+                    </div>
+                </div>
+            {% else %}
+                <div class="alert alert-info">
+                    <a href="/admin/login/">Увійдіть</a>, щоб залишити коментар.
+                </div>
+            {% endif %}
+
+            <!-- Список коментарів -->
+            {% for comment in comments %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h6>{{ comment.author.username }}</h6>
+                            <small class="text-muted">{{ comment.created_at|date:"d.m.Y H:i" }}</small>
+                        </div>
+                        <p>{{ comment.content }}</p>
+
+                        <!-- Відповіді -->
+                        {% if comment.replies.all %}
+                            <div class="ms-4 mt-3">
+                                {% for reply in comment.replies.all %}
+                                    {% if reply.is_approved %}
+                                        <div class="card mb-2">
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-between">
+                                                    <h6>{{ reply.author.username }}</h6>
+                                                    <small class="text-muted">{{ reply.created_at|date:"d.m.Y H:i" }}</small>
+                                                </div>
+                                                <p>{{ reply.content }}</p>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% empty %}
+                <p class="text-muted">Коментарів ще немає. Будьте першим!</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="col-lg-4">
+        <!-- Про автора -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Про автора</h5>
+            </div>
+            <div class="card-body">
+                <h6>{{ article.author.username }}</h6>
+                {% if article.author.bio %}
+                    <p class="text-muted">{{ article.author.bio|truncate_words:30 }}</p>
+                {% endif %}
+                <a href="{% url 'blog:user_articles' article.author.username %}" class="btn btn-sm btn-outline-primary">
+                    Всі статті автора
+                </a>
+            </div>
+        </div>
+
+        <!-- Схожі статті -->
+        {% if related_articles %}
+            <div class="card">
+                <div class="card-header">
+                    <h5>Схожі статті</h5>
+                </div>
+                <div class="card-body">
+                    {% for related in related_articles %}
+                        <div class="mb-3">
+                            <a href="{% url 'blog:article_detail' related.slug %}" class="text-decoration-none">
+                                {{ related.title|truncate_words:10 }}
+                            </a>
+                            <br>
+                            <small class="text-muted">{{ related.views_count }} переглядів</small>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

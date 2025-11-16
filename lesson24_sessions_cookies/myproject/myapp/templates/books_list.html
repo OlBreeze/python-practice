@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Список книг</title>
+    <style>
+        body { font-family: Arial; max-width: 800px; margin: 20px auto; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background: #007bff; color: white; }
+        .time { background: #ffffcc; padding: 10px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h2>Список книг ({{ optimization }})</h2>
+    <div class="time">Час виконання: {{ execution_time|floatformat:4 }} секунд</div>
+
+    <table>
+        <tr>
+            <th>Назва</th>
+            <th>Автор</th>
+            <th>Кількість відгуків</th>
+        </tr>
+        {% for book in books %}
+        <tr>
+            <td>{{ book.title }}</td>
+            <td>{{ book.author.name }}</td>
+            <td>{{ book.reviews.count }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

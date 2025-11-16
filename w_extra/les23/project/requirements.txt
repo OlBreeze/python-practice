@@ -1,0 +1,16 @@
+Django==5.2.7
+djangorestframework==3.16.1
+django-filter==25.2
+django-cors-headers==4.9.0
+psycopg2-binary==2.9.11
+redis==7.0.1
+django-redis==6.0.0
+Pillow==12.0.0
+python-dotenv== 1.2.1
+gunicorn==23.0.0
+
+# Для логування
+python-json-logger==3.3.0
+
+# Для документації API
+coreapi==2.3.3

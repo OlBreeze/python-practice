@@ -1,0 +1,197 @@
+<!-- templates/blog/article_list.html -->
+{% extends 'base.html' %}
+{% load blog_tags %}
+
+{% block title %}Статті - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <!-- Основний контент -->
+    <div class="col-lg-8">
+        <h1 class="mb-4">Статті блогу</h1>
+
+        <!-- Фільтри та сортування -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <form method="get" class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Пошук</label>
+                        <input type="text" name="q" class="form-control" value="{{ search_query }}" placeholder="Пошук статей...">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Тег</label>
+                        <input type="text" name="tag" class="form-control" value="{{ current_tag }}" placeholder="python, django...">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Сортування</label>
+                        <select name="sort" class="form-select">
+                            <option value="-created_at" {% if current_sort == '-created_at' %}selected{% endif %}>Новіші</option>
+                            <option value="created_at" {% if current_sort == 'created_at' %}selected{% endif %}>Старіші</option>
+                            <option value="-views_count" {% if current_sort == '-views_count' %}selected{% endif %}>Популярні</option>
+                            <option value="views_count" {% if current_sort == 'views_count' %}selected{% endif %}>Менш популярні</option>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Застосувати</button>
+                        <a href="{% url 'blog:article_list' %}" class="btn btn-secondary">Скинути</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Список статей -->
+        {% if articles %}
+            {% for article in articles %}
+                <div class="article-card">
+                    <h2>
+                        <a href="{% url 'blog:article_detail' article.slug %}" class="text-decoration-none">
+                            {% if search_query %}
+                                {{ article.title|highlight_search:search_query }}
+                            {% else %}
+                                {{ article.title }}
+                            {% endif %}
+                        </a>
+                    </h2>
+
+                    <div class="text-muted mb-2">
+                        <small>
+                            <i class="bi bi-person"></i>
+                            <a href="{% url 'blog:user_articles' article.author.username %}">{{ article.author.username }}</a>
+                            |
+                            <i class="bi bi-calendar"></i> {{ article.created_at|date:"d.m.Y H:i" }}
+                            |
+                            <i class="bi bi-eye"></i> {{ article.views_count }} переглядів
+                            |
+                            <i class="bi bi-chat"></i> {{ article.comments.count }} коментарів
+                            |
+                            <i class="bi bi-clock"></i> {{ article.content|reading_time }} хв читання
+                        </small>
+                    </div>
+
+                    <!-- Статус -->
+                    {{ article.status|status_badge }}
+
+                    <!-- Excerpt -->
+                    <p class="mt-2">
+                        {% if search_query %}
+                            {{ article.content|truncate_words:50|highlight_search:search_query }}
+                        {% else %}
+                            {{ article.content|truncate_words:50 }}
+                        {% endif %}
+                    </p>
+
+                    <!-- Теги -->
+                    {% if article.tags.all %}
+                        <div class="mb-2">
+                            {% for tag in article.tags.all %}
+                                <a href="{% url 'blog:tagged_articles' tag.name %}" class="badge bg-info text-decoration-none">
+                                    {{ tag.name }}
+                                </a>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <a href="{% url 'blog:article_detail' article.slug %}" class="btn btn-sm btn-outline-primary">
+                        Читати далі →
+                    </a>
+                </div>
+            {% endfor %}
+
+            <!-- Пагінація -->
+            {% if is_paginated %}
+                <nav aria-label="Pagination">
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?{% query_string page=1 %}">Перша</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?{% query_string page=page_obj.previous_page_number %}">Попередня</a>
+                            </li>
+                        {% endif %}
+
+                        <li class="page-item active">
+                            <span class="page-link">
+                                Сторінка {{ page_obj.number }} з {{ page_obj.paginator.num_pages }}
+                            </span>
+                        </li>
+
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?{% query_string page=page_obj.next_page_number %}">Наступна</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?{% query_string page=page_obj.paginator.num_pages %}">Остання</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            {% endif %}
+
+        {% else %}
+            <div class="alert alert-info">
+                <h4>Статей не знайдено</h4>
+                <p>Спробуйте змінити параметри пошуку або створіть першу статтю!</p>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'blog:article_create' %}" class="btn btn-primary">Створити статтю</a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Sidebar -->
+    <div class="col-lg-4">
+        <!-- Популярні теги -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Популярні теги</h5>
+            </div>
+            <div class="card-body">
+                {% for tag in popular_tags %}
+                    <a href="{% url 'blog:tagged_articles' tag.name %}" class="badge bg-primary me-1 mb-2 text-decoration-none">
+                        {{ tag.name }} ({{ tag.article_count }})
+                    </a>
+                {% empty %}
+                    <p class="text-muted">Тегів ще немає</p>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Останні статті -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Останні статті</h5>
+            </div>
+            <div class="card-body">
+                {% for article in recent_articles %}
+                    <div class="mb-3">
+                        <a href="{% url 'blog:article_detail' article.slug %}" class="text-decoration-none">
+                            {{ article.title|truncate_words:10 }}
+                        </a>
+                        <br>
+                        <small class="text-muted">{{ article.created_at|time_since_short }}</small>
+                    </div>
+                {% empty %}
+                    <p class="text-muted">Статей ще немає</p>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Статистика -->
+        {% get_article_stats as stats %}
+        <div class="card">
+            <div class="card-header">
+                <h5>Статистика блогу</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled">
+                    <li><strong>Статей:</strong> {{ stats.total_articles }}</li>
+                    <li><strong>Коментарів:</strong> {{ stats.total_comments }}</li>
+                    <li><strong>Переглядів:</strong> {{ stats.total_views|format_number }}</li>
+                    <li><strong>Авторів:</strong> {{ stats.total_authors }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

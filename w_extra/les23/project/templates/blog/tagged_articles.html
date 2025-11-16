@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Теґ: {{ tag.name }} - {{ block.super }}{% endblock %}
+
+{% block content %}
+<h1>Статті з тегом "{{ tag.name }}"</h1>
+<p>Знайдено: <strong>{{ tag_article_count }}</strong> статей</p>
+
+{% for article in articles %}
+    <div class="article-card">
+        <h2><a href="{% url 'blog:article_detail' article.slug %}">{{ article.title }}</a></h2>
+        <div class="text-muted mb-2">
+            <small>{{ article.author.username }} | {{ article.created_at|date:"d.m.Y" }}</small>
+        </div>
+    </div>
+{% empty %}
+    <p>Статей з цим тегом немає</p>
+{% endfor %}
+{% endblock %}

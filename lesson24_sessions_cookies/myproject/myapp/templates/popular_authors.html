@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Популярні автори</title>
+    <style>
+        body { font-family: Arial; max-width: 800px; margin: 20px auto; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background: #17a2b8; color: white; }
+        .info { background: #d1ecf1; padding: 10px; margin: 10px 0; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h2>Популярні автори (Raw SQL)</h2>
+
+    <div class="info">
+        Автори, у яких книги мають більше 10 відгуків
+    </div>
+
+    {% if authors %}
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Ім'я автора</th>
+            <th>Кількість книг</th>
+        </tr>
+        {% for author in authors %}
+        <tr>
+            <td>{{ author.id }}</td>
+            <td>{{ author.name }}</td>
+            <td>{{ author.book_count }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p>Немає авторів з книгами, що мають більше 10 відгуків.</p>
+    {% endif %}
+</body>
+</html>

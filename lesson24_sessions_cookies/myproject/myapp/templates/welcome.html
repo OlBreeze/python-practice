@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Привітання</title>
+    <style>
+        body { font-family: Arial; max-width: 800px; margin: 50px auto; }
+        .info { background: #f0f0f0; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        .menu { background: #e7f3ff; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        .menu h3 { margin-top: 0; color: #0066cc; }
+        .menu-section { margin: 15px 0; }
+        .menu-section h4 { margin: 10px 0 5px 0; color: #333; font-size: 16px; }
+        .menu a {
+            display: inline-block;
+            margin: 5px 10px 5px 0;
+            padding: 8px 15px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        .menu a:hover { background: #0056b3; }
+        button {
+            padding: 10px 20px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button:hover { background: #c82333; }
+    </style>
+</head>
+<body>
+    <h2>🎉 Привітання!</h2>
+    <div class="info">
+        <p>Привіт, <strong>{{ name }}</strong>, вам <strong>{{ age }}</strong> років!</p>
+    </div>
+
+    <div class="menu">
+        <h3>📚 Меню проекту</h3>
+
+        <div class="menu-section">
+            <h4>🔍 Оптимізація запитів:</h4>
+            <a href="{% url 'books_unoptimized' %}">📉 Без оптимізації</a>
+            <a href="{% url 'books_optimized' %}">📈 З оптимізацією</a>
+            <a href="{% url 'books_cached' %}">💾 Кешування</a>
+        </div>
+
+        <div class="menu-section">
+            <h4>📊 Статистика та аналітика:</h4>
+            <a href="{% url 'statistics' %}">📊 Загальна статистика</a>
+            <a href="{% url 'popular_authors' %}">⭐ Популярні автори (Raw SQL)</a>
+        </div>
+    </div>
+
+    <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">🚪 Вийти</button>
+    </form>
+</body>
+</html>
