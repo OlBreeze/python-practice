@@ -8,6 +8,15 @@ python manage.py createsuperuser
 
 python manage.py runserver
 
+pip install django-ninja-jwt
+pip install django-ninja-extra
+
+
+---
+ git add .   
+ git commit -m "Lesson24/homework"   
+ git push -u origin main  
+
 #### Django Debug Toolbar
 pip install django-debug-toolbar
 
