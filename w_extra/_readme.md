@@ -16,7 +16,17 @@ pip install django-ninja-extra
  git add .   
  git commit -m "Lesson24/homework"   
  git push -u origin main  
+---
 
+### выгрузить зависимости проекта Python
+pip freeze > requirements.txt
+
+### установить зависимости из этого файла
+pip install -r requirements.txt
+
+### Запуск проекта на порту
+ uvicorn app.main:app --reload --port 8002
+---
 #### Django Debug Toolbar
 pip install django-debug-toolbar
 
@@ -43,6 +53,17 @@ python manage.py show_metrics
 # Запуск тестів
 python manage.py test blog
 """
+## асинхронная база на фастАПИ
+pip install aiosqlite sqlalchemy[asyncio]
+
+
+# Стандартный запуск FastAPI (порт 8000)
+uvicorn main:app --reload
+
+# На кастомном порту
+uvicorn main:app --reload --port 8002
+
+
 
 ## 🧩 1. Что такое DRF
 
