@@ -1,0 +1,4 @@
+{"timestamp": "2025-11-30T12:25:33.027672", "event": "account.deposit", "data": {"amount": 500}}
+{"timestamp": "2025-11-30T12:25:33.027980", "event": "account.withdraw", "data": {"amount": 200}}
+{"timestamp": "2025-11-30T12:25:33.028236", "event": "account.deposit", "data": {"amount": 1000}}
+{"timestamp": "2025-11-30T12:25:33.028465", "event": "account.withdraw", "data": {"amount": 300}}
