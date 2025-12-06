@@ -11,6 +11,7 @@ python manage.py runserver
 pip install django-ninja-jwt
 pip install django-ninja-extra
 
+pip install Django channels channels-redis redis
 
 ---
  git add .   
