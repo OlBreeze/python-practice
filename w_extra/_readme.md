@@ -1,3 +1,7 @@
+cd chat_messanger
+django-admin startproject chat_messanger .
+# создает проект в текущем каталоге chat_messanger!
+
 django-admin startproject task_manager  
 python manage.py startapp main
  
